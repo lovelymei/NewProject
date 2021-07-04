@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace NewProject.Models
+{
+    public partial class Listener
+    {
+        public Listener()
+        {
+            Performers = new List<Performer>();
+            Songs = new List<Song>();
+            IsDeleted = false;
+        }
+
+        /// <summary>
+        /// Идентификатор слушателя
+        /// </summary>
+        public Guid ListenerId { get; set; }
+
+        /// <summary>
+        /// Имя
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Фамилия
+        /// </summary>
+        public string Surname { get; set; }
+
+        /// <summary>
+        /// Дата рождения
+        /// </summary>
+        public DateTime BirthDate { get; set; }
+
+        /// <summary>
+        /// Не удален ли слушатель
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// Добавленные песни
+        /// </summary>
+        public virtual List<Song> Songs { get; set; }
+
+        /// <summary>
+        /// Добавленные исполнители
+        /// </summary>
+        public virtual List<Performer> Performers { get; set; }
+    }
+}

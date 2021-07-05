@@ -28,7 +28,7 @@ namespace NewProject
         public virtual DbSet<Performer> Performers { get; set; }
         public virtual DbSet<Song> Songs { get; set; }
         public virtual DbSet<Listener> Listeners { get; set; }
-        public virtual DbSet<Account> Accounts { get; set; }
+        
 
         internal object GetCollection<T>()
         {
@@ -94,19 +94,7 @@ namespace NewProject
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Account>(entity =>
-            {
-                entity.ToTable("Account");
-                entity.Property(e => e.Login)
-                    .IsRequired();
 
-                entity.Property(e => e.Password)
-                    .IsRequired();
-
-                entity.Property(e => e.Role)
-                    .IsRequired();
- 
-            });
 
             OnModelCreatingPartial(modelBuilder);
         }

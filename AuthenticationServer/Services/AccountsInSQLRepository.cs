@@ -1,4 +1,5 @@
-﻿using NewProject.Authorization.Services;
+﻿using AuthenticationServer;
+using NewProject.Authorization.Services;
 using NewProject.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,9 @@ using System.Threading.Tasks;
 namespace NewProject.Services
 {
     public class AccountsInSQLRepository : IAccounts
-
     {
-        MyDatabaseContext _db;
-        public AccountsInSQLRepository(MyDatabaseContext db)
+        AuthContext _db;
+        public AccountsInSQLRepository(AuthContext db)
         {
             _db = db;
         }

@@ -3,17 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using NewProject.Auth;
-using NewProject.Authorization.Models;
 using NewProject.Authorization.Services;
 using NewProject.Models;
-using NewProject.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace NewProject.Authorization.Controllers
 {

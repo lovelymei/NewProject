@@ -17,8 +17,8 @@ namespace NewProject
             : base(options)
         {
             //при изменении бд 
-        //    Database.EnsureDeleted();
-        //    Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         //TODO: add Account entity +

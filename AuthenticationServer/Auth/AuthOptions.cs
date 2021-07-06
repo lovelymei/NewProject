@@ -24,10 +24,5 @@ namespace NewProject.Auth
         /// Время жизни токена в минутах
         /// </summary>
         public const int LIFETIME = 5;
-
-        public static SymmetricSecurityKey GetSymmetricSecurityKey()
-        {
-            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
-        }
     }
 }

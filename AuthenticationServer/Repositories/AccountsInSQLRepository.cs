@@ -18,6 +18,16 @@ namespace NewProject.Services
             _db = db;
         }
 
+        public async Task<List<Account>> GetAllAccounts()
+        {
+            await Task.CompletedTask;
+            return _db.Accounts.ToList();
+        }
 
+        public async Task<Account> GetAccount(string login)
+        {
+            await Task.CompletedTask;
+            return _db.Accounts.SingleOrDefault(u => u.Login == login);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NewProject.Models
@@ -28,13 +29,21 @@ namespace NewProject.Models
         /// <summary>
         /// Роль 
         /// </summary>
-        public string Role { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
         public Account()
         {
             Login = "default";
             Password = "111";
-            Role = "undefined";
         }
+
+        public IEnumerable<Claim> Claims()
+        {
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, Login) };
+            claims.AddRange(Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+            return claims;
+        }
+
     }
 }

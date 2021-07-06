@@ -16,9 +16,9 @@ namespace AuthenticationServer
         public AuthContext(DbContextOptions<AuthContext> options)
             :base(options)
         {
-            //при изменении бд 
-            //    Database.EnsureDeleted();
-            //    Database.EnsureCreated();
+            ////при изменении бд
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
@@ -48,7 +48,7 @@ namespace AuthenticationServer
                 entity.Property(e => e.Password)
                     .IsRequired();
 
-                entity.Property(e => e.Role)
+                entity.Property(e => e.Roles)
                     .IsRequired();
 
             });

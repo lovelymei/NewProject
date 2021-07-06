@@ -22,13 +22,13 @@ namespace NewProject.Models
         /// <summary>
         /// Роль 
         /// </summary>
-        public string Role { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
         public AccountDto(Account account)
         {
             Login = account.Login;
             Password = account.Password;
-            Role = account.Role;
+            Roles = account.Roles;
         }
     }
 }

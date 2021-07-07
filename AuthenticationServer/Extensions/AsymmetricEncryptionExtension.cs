@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AuthenticationServer.Extensions
 {
-    public static class AsymmetricEncryptionExtensions
+    public static class AsymmetricEncryptionExtension
     {
         public static IServiceCollection AddAsymmetricAuthentication(this IServiceCollection services)
         {

@@ -11,6 +11,7 @@ namespace NewProject.Authorization.Models
         public DateTime CreateDate { get; set; }
         public DateTime ExpiresDate { get; set; }
         public Guid AccountId { get; set; }
+        public RefreshToken() { }
         public RefreshToken(Guid accountId, DateTime createDate, int expiresSec)
         {
             AccountId = accountId;

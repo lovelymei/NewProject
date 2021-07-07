@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AuthenticationServer
 {
-    public partial class AuthorizationDbContext : DbContext
+    public partial class AuthContext : DbContext
     {
-        public AuthorizationDbContext()
+        public AuthContext()
         {
             
         }
-        public AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options)
+        public AuthContext(DbContextOptions<AuthContext> options)
             :base(options)
         {
             ////при изменении бд

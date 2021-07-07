@@ -25,8 +25,8 @@ namespace AuthenticationServer.Services
 
         public async Task<string> GetToken(string userLogin)
         {
-            Account account = await _accounts.GetAccount(userLogin);
-            SecurityTokenDescriptor tokenDescriptor = GetTokenDescriptor(account);
+            AccountDto accountDto = await _accounts.GetAccount(userLogin);
+            SecurityTokenDescriptor tokenDescriptor = GetTokenDescriptor(accountDto);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken = tokenHandler.CreateToken(tokenDescriptor);
@@ -35,13 +35,12 @@ namespace AuthenticationServer.Services
             return token;
         }
 
-        private SecurityTokenDescriptor GetTokenDescriptor(Account account)
+        private SecurityTokenDescriptor GetTokenDescriptor(AccountDto accountDto)
         {
             const int expiringDays = 7;
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(account.Claims()),
                 Expires = DateTime.UtcNow.AddDays(expiringDays),
                 SigningCredentials = _signingAudienceCertificate.GetAudienceSigningKey()
             };

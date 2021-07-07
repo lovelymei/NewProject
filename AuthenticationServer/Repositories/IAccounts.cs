@@ -8,7 +8,8 @@ namespace NewProject.Authorization.Services
 {
     public interface IAccounts
     {
-        Task<List<Account>> GetAllAccounts();
-        Task<Account> GetAccount(string login);
+        Task<AccountDto> Get(Guid accountId);
+        Task<bool> Delete(Guid accountId);
+        Task<AccountDto> GetAccount(string login);
     }
 }

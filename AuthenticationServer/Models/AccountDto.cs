@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NewProject.Models
@@ -24,11 +25,25 @@ namespace NewProject.Models
         /// </summary>
         public IEnumerable<string> Roles { get; set; }
 
-        public AccountDto(Account account)
+
+        public Account ToModel()
         {
-            Login = account.Login;
-            Password = account.Password;
-            Roles = account.Roles;
+            return new Account()
+            {
+                AccountId = AccountId,
+                Login = Login,
+                Roles = Roles,
+            };
+        }
+
+        public static AccountDto FromModel(Account model)
+        {
+            return new AccountDto()
+            {
+                AccountId = model.AccountId,
+                Login = model.Login,
+                Roles = model.Roles,
+            };
         }
     }
 }

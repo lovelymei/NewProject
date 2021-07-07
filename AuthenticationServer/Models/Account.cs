@@ -31,19 +31,6 @@ namespace NewProject.Models
         /// </summary>
         public IEnumerable<string> Roles { get; set; }
 
-        public Account()
-        {
-            Login = "default";
-            Password = "111";
-        }
-
-        public IEnumerable<Claim> Claims()
-        {
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, Login) };
-            claims.AddRange(Roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-            return claims;
-        }
 
     }
 }

@@ -7,10 +7,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
+using AuthenticationServer.Extension;
 
 namespace NewProject.Services
 {
-    public class AccountsInSQLRepository : IAccounts
+    public abstract class AccountsInSQLRepository : IAccounts
     {
         AuthContext _db;
         public AccountsInSQLRepository(AuthContext db)
@@ -18,16 +23,39 @@ namespace NewProject.Services
             _db = db;
         }
 
-        public async Task<List<Account>> GetAllAccounts()
+        public async Task<AccountDto> GetAccount(string login)
         {
             await Task.CompletedTask;
-            return _db.Accounts.ToList();
+            ICollection<Account> collection = (ICollection<Account>)_db.GetCollection<Account>();
+            var account = collection.FirstOrDefault(c => c.Login == login);
+
+            if (account == null) return null;
+            return AccountDto.FromModel(account);
         }
 
-        public async Task<Account> GetAccount(string login)
+        public async Task<AccountDto> Get(Guid accountId)
         {
             await Task.CompletedTask;
-            return _db.Accounts.SingleOrDefault(u => u.Login == login);
+            ICollection<Account> collection = (ICollection<Account>)_db.GetCollection<Account>();
+            var account = collection.FirstOrDefault(c => c.AccountId == accountId);
+            if (account == null) return null;
+            return AccountDto.FromModel(account);
         }
+
+        public async Task<bool> Delete(Guid accountId)
+        {
+            await Task.CompletedTask;
+            ICollection<Account> collection = (ICollection<Account>)_db.GetCollection<Account>();
+            var account  = collection.FirstOrDefault(c => c.AccountId == accountId);
+            bool isDeleted = true;
+
+            if (account == null) isDeleted = false;
+            
+            await _db.SaveChangesAsync();
+            await _db.DisposeAsync();
+            
+            return isDeleted;
+        }
+
     }
 }

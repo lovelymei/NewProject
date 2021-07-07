@@ -8,7 +8,7 @@ namespace NewProject.Authorization.Models
 {
     public class TokenDto
     {
-        public AccountDto Account { get; set; }
+       // public AccountDto Account { get; set; }
         public string Jwt { get; set; }
         public DateTime Expires { get; set; }
         public Guid RefreshTokenId { get; set; }

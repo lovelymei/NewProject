@@ -17,7 +17,7 @@ namespace AuthenticationServer.Services
         private readonly IAccounts _accounts;
         private readonly SigningAudienceCertificate _signingAudienceCertificate;
 
-        public TokenService(AccountsInSQLRepository accounts)
+        public TokenService(AccountsInSQlRepository accounts)
         {
             _accounts = accounts;
             _signingAudienceCertificate = new SigningAudienceCertificate();

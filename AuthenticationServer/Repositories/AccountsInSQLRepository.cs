@@ -15,6 +15,7 @@ using AuthenticationServer.Extensions;
 using AuthenticationServer.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
 using NewProject.Authorization.Models;
+using AuthenticationServer.Models;
 
 namespace NewProject.Services
 {
@@ -57,14 +58,14 @@ namespace NewProject.Services
             return new AccountReturnDto(account);
         }
 
-        public async Task<AccountReturnDto> CreateAccount(AccountCreateDto newAccount) // добавить роль
+        public async Task<AccountReturnDto> CreateAccount(AccountCreateDto accountCreateDto, Role role) 
         {
             var salt = GenerateSalt();
-            var enteredPassHash = newAccount.Password.ToPasswordHash(salt);
+            var enteredPassHash = accountCreateDto.Password.ToPasswordHash(salt);
 
             LoginModel newLoginModel = new LoginModel()
             {
-                Email = newAccount.Email,
+                Email = accountCreateDto.Email,
                 Salt = Convert.ToBase64String(salt),
                 PasswordHash = Convert.ToBase64String(enteredPassHash),
             };
@@ -72,7 +73,8 @@ namespace NewProject.Services
             Account account = new Account()
             {
                 LoginModel = newLoginModel,
-                NickName = newAccount.NickName,
+                NickName = accountCreateDto.NickName,
+                Role = role
             };
 
             await _db.Accounts.AddAsync(account);
@@ -83,63 +85,86 @@ namespace NewProject.Services
 
         }
 
-        //public async Task<Listener> RegisterListenerAccount(AccountCreateDto newAccount)
-        //{
-        //    Role accountRole = await _db.Roles.FirstOrDefaultAsync(r => r.Name == "listener");
-        //    var userAccountDto = await CreateAccount(login, password, accountCreateDto, accountRole);
+        public async Task<AccountReturnDto> RegisterListenerAccount(AccountCreateDto accountCreateDto)
+        {
+            Role accountRole = await _db.Roles.FirstOrDefaultAsync(r => r.Name == "listener");
+            var listenerAccontDto = await CreateAccount(accountCreateDto, accountRole);
 
-        //    return userAccountDto;
-        //}
+            return listenerAccontDto;
+        }
 
-        //public async Task<bool> UpdateListenerAccount(Guid id, ListenerCreateDto accountCreateDto)
-        //{
-        //    var listener = await _db.Listeners.FirstOrDefaultAsync(c => c.UserId == id);
+        public async Task<AccountReturnDto> RegisterPerformerAccount(AccountCreateDto accountCreateDto)
+        {
+            Role accountRole = await _db.Roles.FirstOrDefaultAsync(r => r.Name == "performer");
+            var performerAccountDto = await CreateAccount(accountCreateDto, accountRole);
 
-        //    if (listener == null) return false;
-
-        //    listener = accountCreateDto.ToEntity();
-
-        //    _db.Users.Update(listener);
-        //    await _db.SaveChangesAsync();
-        //    await _db.DisposeAsync();
-
-        //    return true;
-        //}
+            return performerAccountDto;
+        }
 
 
-        //public async Task<bool> DeleteListenerAccount(Guid id)
-        //{
-        //    var listener = await _db.Listeners.FirstOrDefaultAsync(c => c.UserId == id);
+        public async Task<bool> UpdateAccount(Guid id, AccountUpdateDto accountUpdateDto)
+        {
+            var account = await _db.Accounts.FirstOrDefaultAsync(c => c.AccountId == id);
 
-        //    if (listener == null) return false;
+            if (account == null) return false;
 
-        //    listener.IsDeleted = true;
+            var salt = GenerateSalt();
+            var enteredPassHash = accountUpdateDto.Password.ToPasswordHash(salt);
 
-        //    await _db.SaveChangesAsync();
-        //    await _db.DisposeAsync();
+            account.NickName = accountUpdateDto.NickName;
+            account.LoginModel.Email = accountUpdateDto.Email;
+            account.LoginModel.Salt = Convert.ToBase64String(salt);
+            account.LoginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
 
-        //    return true;
-        //}
+            _db.Accounts.Update(account);
+            await _db.SaveChangesAsync();
+            await _db.DisposeAsync();
 
-        //public async Task<List<Listener>> GetAllDeletedListeners()
-        //{
-        //    await Task.CompletedTask;
-        //    return _db.Listeners.Where(c => c.IsDeleted == true).ToList();
-        //}
+            return true;
+        }
 
-        //public async Task<bool> RestoreListener(Guid id)
-        //{
-        //    var listener = await _db.Listeners.FirstOrDefaultAsync(l => l.UserId == id);
 
-        //    if (listener == null) return false;
+        public async Task<bool> DeleteAccount(Guid id)
+        {
+            var account = await _db.Accounts.FirstOrDefaultAsync(c => c.AccountId == id);
 
-        //    listener.IsDeleted = false;
+            if (account == null) return false;
 
-        //    await _db.SaveChangesAsync();
-        //    await _db.DisposeAsync();
+            account.IsDeleted = true;
 
-        //    return true;
-        //}
+            await _db.SaveChangesAsync();
+            await _db.DisposeAsync();
+
+            return true;
+        }
+
+        public async Task<List<AccountReturnDto>> GetAllDeletedAccounts()
+        {
+            var deletedAccounts = await _db.Accounts.Where(c => c.IsDeleted == true).ToListAsync();
+
+            List<AccountReturnDto> accountsDto = new List<AccountReturnDto>();
+
+            foreach (var account in deletedAccounts)
+            {
+                accountsDto.Add(new AccountReturnDto(account));
+            }
+
+            return accountsDto;
+        }
+
+        public async Task<bool> RestoreAccount(Guid id)
+        {
+            var account = await _db.Accounts.FirstOrDefaultAsync(l => l.AccountId == id);
+
+            if (account == null) return false;
+
+            account.IsDeleted = false;
+
+            await _db.SaveChangesAsync();
+            await _db.DisposeAsync();
+
+            return true;
+        }
 
         public static byte[] GenerateSalt()
         {

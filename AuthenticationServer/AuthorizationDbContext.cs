@@ -42,7 +42,7 @@ namespace AuthenticationServer
                 modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
 
                 entity.ToTable("Account");
-                entity.Property(e => e.Login)
+                entity.Property(e => e.loginModel)
                     .IsRequired();
 
                 entity.Property(e => e.Password)

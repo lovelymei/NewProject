@@ -1,4 +1,5 @@
 ﻿using AuthenticationServer.Certificates;
+using AuthenticationServer.Models.Dtos;
 using Microsoft.IdentityModel.Tokens;
 using NewProject.Authorization.Services;
 using NewProject.Models;
@@ -25,8 +26,8 @@ namespace AuthenticationServer.Services
 
         public async Task<string> GetToken(string userLogin)
         {
-            AccountDto accountDto = await _accounts.GetAccount(userLogin);
-            SecurityTokenDescriptor tokenDescriptor = GetTokenDescriptor(accountDto);
+            AccountReturnDto accountDto = await _accounts.GetAccount(userLogin);
+            SecurityTokenDescriptor tokenDescriptor = GetTokenDescriptor();
 
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken = tokenHandler.CreateToken(tokenDescriptor);
@@ -35,7 +36,8 @@ namespace AuthenticationServer.Services
             return token;
         }
 
-        private SecurityTokenDescriptor GetTokenDescriptor(AccountDto accountDto)
+
+        private SecurityTokenDescriptor GetTokenDescriptor()
         {
             const int expiringDays = 7;
 

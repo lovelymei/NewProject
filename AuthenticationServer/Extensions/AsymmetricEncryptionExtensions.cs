@@ -15,6 +15,7 @@ namespace AuthenticationServer.Extensions
         {
             var issuerSigningCertificate = new SigningIssuerCertificate();
             RsaSecurityKey issuerSingningKey = issuerSigningCertificate.GetIssuerSigningKey();
+
             services.AddAuthentication(authOptions =>
             {
                 authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

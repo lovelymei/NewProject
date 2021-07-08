@@ -19,7 +19,7 @@ using AuthenticationServer.Models;
 
 namespace NewProject.Services
 {
-    public abstract class AccountsInSQlRepository 
+    public abstract class AccountsInSQlRepository : IAccounts
     {
         private const int NUMBER_OF_ROUNDS = 1000;
         private readonly AuthorizationDbContext _db;
@@ -34,7 +34,7 @@ namespace NewProject.Services
 
         public async Task<List<AccountReturnDto>> GetAllListeners()
         {
-  
+
             var accounts = await _db.Accounts.Where(c => c.IsDeleted == false).ToListAsync();
 
             List<AccountReturnDto> accountsDto = new List<AccountReturnDto>();
@@ -58,7 +58,7 @@ namespace NewProject.Services
             return new AccountReturnDto(account);
         }
 
-        public async Task<AccountReturnDto> CreateAccount(AccountCreateDto accountCreateDto, Role role) 
+        public async Task<AccountReturnDto> CreateAccount(AccountCreateDto accountCreateDto, Role role)
         {
             var salt = GenerateSalt();
             var enteredPassHash = accountCreateDto.Password.ToPasswordHash(salt);
@@ -72,7 +72,7 @@ namespace NewProject.Services
 
             Account account = new Account()
             {
-                LoginModel = newLoginModel,
+                loginModel = newLoginModel,
                 NickName = accountCreateDto.NickName,
                 Role = role
             };
@@ -112,9 +112,9 @@ namespace NewProject.Services
             var enteredPassHash = accountUpdateDto.Password.ToPasswordHash(salt);
 
             account.NickName = accountUpdateDto.NickName;
-            account.LoginModel.Email = accountUpdateDto.Email;
-            account.LoginModel.Salt = Convert.ToBase64String(salt);
-            account.LoginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
+            account.loginModel.Email = accountUpdateDto.Email;
+            account.loginModel.Salt = Convert.ToBase64String(salt);
+            account.loginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
 
             _db.Accounts.Update(account);
             await _db.SaveChangesAsync();

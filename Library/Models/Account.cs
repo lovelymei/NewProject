@@ -15,8 +15,7 @@ namespace NewProject.Models
         public bool IsDeleted { get; set; }
         public int RoleId { get; set; }
 
-
-        public LoginModel LoginModel { get; set; }
+        public LoginModel loginModel { get; set; }
         public Role Role { get; set; }
 
         public Account()

@@ -8,9 +8,9 @@ namespace AuthenticationServer.Models
 {
     public class Role
     {
-        public Roles RoleId { get; set; }
+        public int RoleId { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Account> Accounts{ get; set; }
+        public IEnumerable<Account> Accounts { get; set; }
 
         public Role()
         {
@@ -19,4 +19,4 @@ namespace AuthenticationServer.Models
 
     }
 
-   
+}

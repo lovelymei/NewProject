@@ -19,27 +19,5 @@ namespace NewProject.Authorization.Services
                 return Convert.ToBase64String(randomNumber);
             }
         }
-
-        public async Task<string> CreateHash(string password)
-        {
-            // Generate a random salt
-            RNGCryptoServiceProvider csprng = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[24];
-            csprng.GetBytes(salt);
-
-            // Hash the password and encode the parameters
-            byte[] hash = await PBKDF2(password, salt, 1000, 24);
-            return (1000 + ":" + Convert.ToBase64String(salt) + ":" +Convert.ToBase64String(hash));
-        }
-
-        private async Task<byte[]> PBKDF2(string password, byte[] salt, int iterations, int outputBytes)
-        {
-            await Task.CompletedTask;
-            Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt);
-            pbkdf2.IterationCount = iterations;
-            return pbkdf2.GetBytes(outputBytes);
-        }
-
-
     }
 }

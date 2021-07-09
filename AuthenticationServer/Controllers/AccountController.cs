@@ -1,12 +1,9 @@
-﻿using AuthenticationServer.Models;
-using AuthenticationServer.Models.Dtos;
+﻿using Library.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NewProject.AuthenticationServer.Models.Dtos;
 using NewProject.AuthenticationServer.Repositories;
-using NewProject.Authorization.Services;
-using NewProject.Models;
-using NewProject.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

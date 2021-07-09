@@ -1,5 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using NewProject.AuthenticationServer.Certificates;
+using NewProject.AuthenticationServer.Models.Dtos;
+using NewProject.AuthenticationServer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;

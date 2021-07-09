@@ -44,7 +44,7 @@ namespace AuthenticationServer
                     .HasForeignKey(e => e.RoleId)
                     .HasConstraintName("Role/Accounts");
 
-                entity.HasOne(c => c.LoginModel)
+                entity.HasOne(c => c.loginModel)
                     .WithOne(c => c.Account);
 
                 entity.Property(p => p.NickName)

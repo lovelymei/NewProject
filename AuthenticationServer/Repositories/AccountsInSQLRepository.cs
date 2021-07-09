@@ -112,9 +112,9 @@ namespace NewProject.Services
             var enteredPassHash = accountUpdateDto.Password.ToPasswordHash(salt);
 
             account.NickName = accountUpdateDto.NickName;
-            account.LoginModel.Email = accountUpdateDto.Email;
-            account.LoginModel.Salt = Convert.ToBase64String(salt);
-            account.LoginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
+            account.loginModel.Email = accountUpdateDto.Email;
+            account.loginModel.Salt = Convert.ToBase64String(salt);
+            account.loginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
 
             _db.Accounts.Update(account);
             await _db.SaveChangesAsync();

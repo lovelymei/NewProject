@@ -32,9 +32,8 @@ namespace NewProject.Services
             _logger = logger;
         }
 
-        public async Task<List<AccountReturnDto>> GetAllListeners()
+        public async Task<IEnumerable<AccountReturnDto>> GetAllAccounts()
         {
-
             var accounts = await _db.Accounts.Where(c => c.IsDeleted == false).ToListAsync();
 
             List<AccountReturnDto> accountsDto = new List<AccountReturnDto>();
@@ -102,17 +101,17 @@ namespace NewProject.Services
         }
 
 
-        public async Task<bool> UpdateAccount(Guid id, AccountUpdateDto accountUpdateDto)
+        public async Task<bool> UpdateAccount(Guid id, AccountCreateDto accountCreateDto)
         {
             var account = await _db.Accounts.FirstOrDefaultAsync(c => c.AccountId == id);
 
             if (account == null) return false;
 
             var salt = GenerateSalt();
-            var enteredPassHash = accountUpdateDto.Password.ToPasswordHash(salt);
+            var enteredPassHash = accountCreateDto.Password.ToPasswordHash(salt);
 
-            account.NickName = accountUpdateDto.NickName;
-            account.loginModel.Email = accountUpdateDto.Email;
+            account.NickName = accountCreateDto.NickName;
+            account.loginModel.Email = accountCreateDto.Email;
             account.loginModel.Salt = Convert.ToBase64String(salt);
             account.loginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
 
@@ -175,5 +174,10 @@ namespace NewProject.Services
             return randomNumber;
         }
 
+        //private async Task<AccountReturnDto> CheckAccount(string name,string password)
+        //{
+        //    var account = _db.Accounts.FirstOrDefaultAsync(c => c.NickName == name);
+        //    if (account == null) return null;
+        //}
     }
 }

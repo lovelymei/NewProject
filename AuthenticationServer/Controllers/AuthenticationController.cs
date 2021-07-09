@@ -9,6 +9,7 @@ namespace AuthenticationServer.Controllers
     [Route("identity/[controller]")]
     public class AuthenticationController : ControllerBase
     {
-        //private readonly 
+        //private readonly
+        
     }
 }

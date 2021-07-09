@@ -21,7 +21,7 @@ namespace AuthenticationServer.Services
         public async Task<string> Authenticate(LoginModel loginModel)
         {
             //validation for loginModel 
-            string securityToken = await _tokenService.GetToken(loginModel.Login);
+            string securityToken = await _tokenService.GetToken(loginModel.Email);
             return securityToken;
         }
     }

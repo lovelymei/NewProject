@@ -15,7 +15,7 @@ using NewProject.AuthenticationServer.Extensions;
 
 namespace NewProject.AuthenticationServer.Repositories
 {
-    public abstract class AccountsInSQlRepository : IAccounts
+    public abstract class AccountsInSQlRepository 
     {
         private const int NUMBER_OF_ROUNDS = 1000;
         private readonly AuthorizationDbContext _db;
@@ -170,10 +170,18 @@ namespace NewProject.AuthenticationServer.Repositories
             return randomNumber;
         }
 
-        //private async Task<AccountReturnDto> CheckAccount(string name,string password)
-        //{
-        //    var account = _db.Accounts.FirstOrDefaultAsync(c => c.NickName == name);
-        //    if (account == null) return null;
-        //}
+        private async Task<AccountReturnDto> Authenticate(string email, string password)
+        {
+            var account = await _db.Accounts.FirstOrDefaultAsync(c => c.loginModel.Email == email);
+
+            if (account == null) return null;
+
+            var enteredPassHash = password.ToPasswordHash(Convert.FromBase64String(account.loginModel.Salt));
+
+            var isValid = Convert.ToBase64String(enteredPassHash) == account.loginModel.PasswordHash;
+
+            return isValid ? new AccountReturnDto(account) : null;
+
+        }
     }
 }

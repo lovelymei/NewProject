@@ -1,7 +1,4 @@
-﻿using AuthenticationServer;
-using NewProject.Authorization.Services;
-using NewProject.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -11,13 +8,11 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-using AuthenticationServer.Extensions;
-using AuthenticationServer.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
-using NewProject.Authorization.Models;
-using AuthenticationServer.Models;
+using NewProject.AuthenticationServer.Models.Dtos;
+using Library.Models;
 
-namespace NewProject.Services
+namespace NewProject.AuthenticationServer.Repositories
 {
     public abstract class AccountsInSQlRepository : IAccounts
     {

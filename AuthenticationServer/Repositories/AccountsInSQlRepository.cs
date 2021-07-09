@@ -11,6 +11,7 @@ using MongoDB.Driver;
 using Microsoft.EntityFrameworkCore;
 using NewProject.AuthenticationServer.Models.Dtos;
 using Library.Models;
+using NewProject.AuthenticationServer.Extensions;
 
 namespace NewProject.AuthenticationServer.Repositories
 {

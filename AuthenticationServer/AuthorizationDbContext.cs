@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NewProject.Models;
+﻿using Library.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +22,8 @@ namespace AuthenticationServer
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<LoginModel> LoginModel { get; set; }
         internal object GetCollection<T>()
         {
             throw new NotImplementedException();
@@ -30,27 +32,47 @@ namespace AuthenticationServer
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=WIN-C8HRCMG8G6A\\SQLEXPRESS;Database=Auth;Trusted_Connection=True;");
+                
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
             modelBuilder.Entity<Account>(entity =>
             {
-                modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
+                entity.HasOne(e => e.Role)
+                    .WithMany(e => e.Accounts)
+                    .HasForeignKey(e => e.RoleId)
+                    .HasConstraintName("Role/Accounts");
 
-                entity.ToTable("Account");
-                entity.Property(e => e.loginModel)
+                entity.HasOne(c => c.LoginModel)
+                    .WithOne(c => c.Account);
+
+                entity.Property(p => p.NickName)
+                    .HasMaxLength(100)
                     .IsRequired();
 
-                entity.Property(e => e.Password)
+                entity.Property(p => p.IsDeleted)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<LoginModel>(entity =>
+            {
+                entity.Property(p => p.Email)
+                    .HasMaxLength(100)
                     .IsRequired();
 
-                entity.Property(e => e.Roles)
+                entity.Property(p => p.PasswordHash)
                     .IsRequired();
 
+                entity.Property(p => p.Salt)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(p => p.Name)
+                    .HasMaxLength(100)
+                    .IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);

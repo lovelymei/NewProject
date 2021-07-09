@@ -3,6 +3,7 @@ using AuthenticationServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +31,10 @@ namespace AuthenticationServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration.GetConnectionString("AuthorizationDatabase");
+            services.AddDbContext<AuthorizationDbContext>(options =>
+                options.UseSqlServer(connection));
+
             services.AddScoped<IAccounts, AccountsInSQlRepository>();
             services.AddScoped<IToken, TokenRepository>();
            

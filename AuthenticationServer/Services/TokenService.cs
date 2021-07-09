@@ -1,9 +1,5 @@
-﻿using AuthenticationServer.Certificates;
-using AuthenticationServer.Models.Dtos;
-using Microsoft.IdentityModel.Tokens;
-using NewProject.Authorization.Services;
-using NewProject.Models;
-using NewProject.Services;
+﻿using Microsoft.IdentityModel.Tokens;
+using NewProject.AuthenticationServer.Certificates;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Services
+namespace NewProject.AuthenticationServer.Services
 {
     public class TokenService
     {

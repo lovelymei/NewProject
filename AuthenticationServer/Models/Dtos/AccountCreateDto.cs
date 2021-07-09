@@ -1,11 +1,11 @@
-﻿using Library.Validation;
+﻿using Library.ValidationAttributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Models.Dtos
+namespace NewProject.AuthenticationServer.Models.Dtos
 {
     public class AccountCreateDto
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Models
+namespace Library.Models
 {
     public class Role
     {

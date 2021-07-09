@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 //new branch Andrew Develop 
-namespace AuthenticationServer
+namespace NewProject.AuthenticationServer
 {
     public class Program
     {

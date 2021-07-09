@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NewProject.AuthenticationServer.Repositories;
 using NewProject.Authorization.Services;
 using NewProject.Models;
 using System.Linq;
 using System.Security.Claims;
 
-namespace TokenApp.Controllers
+namespace NewProject.AuthenticationServer.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]

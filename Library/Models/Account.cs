@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace NewProject.Models
+namespace Library.Models
 {
     public class Account
     {

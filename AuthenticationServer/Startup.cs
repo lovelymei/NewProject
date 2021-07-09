@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 
 
-namespace AuthenticationServer
+namespace NewProject.AuthenticationServer
 {
     public class Startup
     {

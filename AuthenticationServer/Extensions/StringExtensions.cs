@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Extensions
+namespace NewProject.AuthenticationServer.Extensions
 {
     public static class StringExtentions
     {

@@ -1,10 +1,11 @@
-﻿using AuthenticationServer.Models;
+﻿
 using AuthenticationServer.Models.Dtos;
+using NewProject.AuthenticationServer.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NewProject.Services
+namespace NewProject.AuthenticationServer.Repositories
 {
     public interface IAccounts
     {

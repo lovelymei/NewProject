@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Models.Dtos
+namespace NewProject.AuthenticationServer.Models.Dtos
 {
     public class SignIn
     {

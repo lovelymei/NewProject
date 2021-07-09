@@ -1,12 +1,11 @@
-﻿using NewProject.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace NewProject.Authorization.Services
+namespace NewProject.AuthenticationServer.Repositories
 {
     public class TokenRepository : IToken
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace NewProject.Authorization.Services
+namespace NewProject.AuthenticationServer.Repositories
 {
     public interface IToken
     {

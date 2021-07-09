@@ -1,13 +1,13 @@
-﻿using AuthenticationServer.Certificates;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using NewProject.AuthenticationServer.Certificates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Extensions
+namespace NewProject.AuthenticationServer.Extensions
 {
     public static class AsymmetricEncryptionExtensions
     {

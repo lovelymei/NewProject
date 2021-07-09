@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Controllers
+namespace NewProject.AuthenticationServer.Controllers
 {
     [Route("identity/[controller]")]
     public class AuthenticationController : ControllerBase

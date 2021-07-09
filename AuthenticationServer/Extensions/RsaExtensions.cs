@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace AuthenticationServer.Models.Jwt
+namespace NewProject.AuthenticationServer.Extensions
 {
     public static class RsaExtensions
     {

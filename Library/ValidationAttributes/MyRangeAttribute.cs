@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Validation
+namespace Library.ValidationAttributes
 {
     public class MyRangeAttribute : Attribute, IModelValidator
     {

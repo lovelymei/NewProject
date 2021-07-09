@@ -1,14 +1,14 @@
-﻿using NewProject.Models;
+﻿using Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthenticationServer.Models.Dtos
+namespace NewProject.AuthenticationServer.Models.Dtos
 {
     public class AccountReturnDto
     {
-        public AccountReturnDto(Account account)
+        public AccountReturnDto(Library.Models.Account account)
         {
             NickName = account.NickName;
             RoleId = account.RoleId;

@@ -20,25 +20,5 @@ namespace TokenApp.Controllers
             _accounts = accounts;
         }
 
-        /// <summary>
-        /// Получить текущий аккаунт
-        /// </summary>
-        /// <returns></returns>
-        //[HttpGet("current")]
-        //public IActionResult GetClaims()
-        //{
-        //    var account = _accounts.GetAccount();
-        //}
-
-        //[HttpGet("all")]
-        //public ActionResult<AccountDto> GetAll()
-        //{
-        //}
-
-        //[HttpPost("login")]
-        //[AllowAnonymous]
-        //public IActionResult Login([FromBody] LoginModel user)
-        //{
-        //}
     }
 }

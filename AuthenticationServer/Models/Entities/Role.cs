@@ -1,10 +1,9 @@
-﻿using NewProject.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Library.Models
+namespace NewProject.AuthenticationServer.Models.Entities
 {
     public class Role
     {

@@ -1,5 +1,4 @@
-﻿using Library.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +43,7 @@ namespace NewProject.AuthenticationServer
                     .HasForeignKey(e => e.RoleId)
                     .HasConstraintName("Role/Accounts");
 
-                entity.HasOne(c => c.loginModel)
+                entity.HasOne(c => c.LoginModel)
                     .WithOne(c => c.Account);
 
                 entity.Property(p => p.NickName)

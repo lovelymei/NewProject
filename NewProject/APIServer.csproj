@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthenticationServer\AuthenticationServer.csproj" />
-    <ProjectReference Include="..\Library\Library.csproj" />
   </ItemGroup>
 
 </Project>

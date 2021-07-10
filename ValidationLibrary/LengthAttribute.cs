@@ -5,23 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.ValidationAttributes  //отдельная библиотека 
+namespace AspNetCoreValidationLibrary
 {
-    public class DateFormatAttribute : Attribute, IModelValidator
+    public class LengthAttribute : Attribute, IModelValidator
     {
+        public int MaxLen { get; set; }
+        public int MinLen { get; set; }
+        public string ErrMes { get; set; }
+
         public IEnumerable<ModelValidationResult> Validate(ModelValidationContext context)
         {
             if (!(context.Model is string)) return Enumerable.Empty<ModelValidationResult>();
 
-            DateTime date;
             var str = (string)context.Model;
 
-            if (!DateTime.TryParse(str, out date))
+            if (str.Length < MinLen || str.Length > MaxLen)
             {
                 return new List<ModelValidationResult>
-                {
-                    new ModelValidationResult(context.ModelMetadata.PropertyName, "has uncorrect format date. It can be dd.mm.yyyy or dd/mm/yyyy")
-                };
+                    {
+                       new ModelValidationResult(context.ModelMetadata.PropertyName, $"{ErrMes} ({MinLen}..{MaxLen})")
+                    };
             }
 
             return Enumerable.Empty<ModelValidationResult>();

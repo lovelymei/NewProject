@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Library.Models
+namespace NewProject.AuthenticationServer.Models.Entities
 {
-    public class LoginModel //Login
+    public class Login
     {
         public Guid AccountId { get; set; }
         public string Email { get; set; }

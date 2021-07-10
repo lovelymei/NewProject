@@ -6,15 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIServer", "NewProject\APIServer.csproj", "{7363D34F-1AD6-4948-97C0-C7078C291B23}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272} = {A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}
-		{A666DDA9-E573-485E-831E-B0E8879EF861} = {A666DDA9-E573-485E-831E-B0E8879EF861}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationServer", "AuthenticationServer\AuthenticationServer.csproj", "{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A666DDA9-E573-485E-831E-B0E8879EF861} = {A666DDA9-E573-485E-831E-B0E8879EF861}
-	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{A666DDA9-E573-485E-831E-B0E8879EF861}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreValidationLibrary", "ValidationLibrary\AspNetCoreValidationLibrary.csproj", "{80875608-9885-4A7A-A804-C670BA5F7892}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiesLibrary", "EntitiesLibrary\EntitiesLibrary.csproj", "{2CCD083D-2B22-4258-A8B7-07981C4452F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +28,14 @@ Global
 		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A666DDA9-E573-485E-831E-B0E8879EF861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A666DDA9-E573-485E-831E-B0E8879EF861}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A666DDA9-E573-485E-831E-B0E8879EF861}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A666DDA9-E573-485E-831E-B0E8879EF861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80875608-9885-4A7A-A804-C670BA5F7892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80875608-9885-4A7A-A804-C670BA5F7892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80875608-9885-4A7A-A804-C670BA5F7892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80875608-9885-4A7A-A804-C670BA5F7892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CCD083D-2B22-4258-A8B7-07981C4452F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CCD083D-2B22-4258-A8B7-07981C4452F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CCD083D-2B22-4258-A8B7-07981C4452F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CCD083D-2B22-4258-A8B7-07981C4452F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

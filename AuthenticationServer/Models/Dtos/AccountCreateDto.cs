@@ -1,4 +1,4 @@
-﻿using Library.ValidationAttributes;
+﻿using AspNetCoreValidationLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

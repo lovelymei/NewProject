@@ -1,4 +1,4 @@
-﻿using Library.Models;
+﻿using NewProject.AuthenticationServer.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Models.Dtos
 {
-    public class AccountReturnDto
+    public class AccountDto
     {
-        public AccountReturnDto(Library.Models.Account account)
+        public AccountDto(Account account)
         {
             NickName = account.NickName;
             RoleId = account.RoleId;

@@ -1,5 +1,4 @@
-﻿using Library.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewProject.AuthenticationServer.Models.Dtos;
@@ -29,7 +28,7 @@ namespace NewProject.AuthenticationServer.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        public async Task<ActionResult<AccountReturnDto>> GetAllAccounts()
+        public async Task<ActionResult<AccountDto>> GetAllAccounts()
         {
             var accounts = await _accounts.GetAllAccounts();
             if (accounts == null) return NotFound();
@@ -42,7 +41,7 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("current")]
-        public async Task<ActionResult<AccountReturnDto>> GetCurrentAccount(Guid id)
+        public async Task<ActionResult<AccountDto>> GetCurrentAccount(Guid id)
         {
             var account = await _accounts.GetAccount(id);
             if (account == null) return NotFound();
@@ -68,9 +67,11 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <param name="role"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult<AccountReturnDto>> CreateAccount([FromBody] AccountCreateDto accountCreateDto, Role role)
+        public async Task<ActionResult<AccountDto>> CreateAccount([FromBody] AccountCreateDto accountCreateDto, Role role //Роли не должно быть она автоматически присваивается)
         {
-            var createdAccount = await _accounts.CreateAccount(accountCreateDto, role);
+            var createdAccount = await _accounts.CreateAccount(accountCreateDto, role);  //ОШИБКА нужно вызвать RegisterListenerAccount
+            // и потом метод еще один создать но уже с RegisterPerformeAccount
+
             return Ok(createdAccount);
         }
 

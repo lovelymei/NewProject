@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Repositories
 {
-    public class TokenRepository : IToken
+    public class TokenRepository
     {
         public string GenerateRefreshToken()
         {

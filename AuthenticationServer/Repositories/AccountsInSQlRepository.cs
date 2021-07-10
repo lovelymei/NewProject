@@ -170,7 +170,7 @@ namespace NewProject.AuthenticationServer.Repositories
             return randomNumber;
         }
 
-        private async Task<AccountReturnDto> Authenticate(string email, string password)
+        public async Task<AccountReturnDto> Authenticate(string email, string password)
         {
             var account = await _db.Accounts.FirstOrDefaultAsync(c => c.loginModel.Email == email);
 

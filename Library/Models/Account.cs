@@ -1,6 +1,4 @@
-﻿using AuthenticationServer.Models;
-using NewProject.Authorization.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -8,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.Models
 {
-    public class Account
+    public class Account    //наследование 
     {
         public Guid AccountId { get; set; }
         public string NickName { get; set; }

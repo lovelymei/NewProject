@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.ValidationAttributes
+namespace Library.ValidationAttributes  //отдельная библиотека 
 {
     public class DateFormatAttribute : Attribute, IModelValidator
     {

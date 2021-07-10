@@ -10,12 +10,12 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using Microsoft.EntityFrameworkCore;
 using NewProject.AuthenticationServer.Models.Dtos;
-using Library.Models;
 using NewProject.AuthenticationServer.Extensions;
+using NewProject.AuthenticationServer.Models.Entities;
 
 namespace NewProject.AuthenticationServer.Repositories
 {
-    public abstract class AccountsInSQlRepository 
+    public abstract class AccountsInSQlRepository : IAccounts
     {
         private const int NUMBER_OF_ROUNDS = 1000;
         private readonly AuthorizationDbContext _db;
@@ -28,21 +28,21 @@ namespace NewProject.AuthenticationServer.Repositories
             _logger = logger;
         }
 
-        public async Task<IEnumerable<AccountReturnDto>> GetAllAccounts()
+        public async Task<IEnumerable<AccountDto>> GetAllAccounts()
         {
             var accounts = await _db.Accounts.Where(c => c.IsDeleted == false).ToListAsync();
 
-            List<AccountReturnDto> accountsDto = new List<AccountReturnDto>();
+            List<AccountDto> accountsDto = new List<AccountDto>();
 
             foreach (var account in accounts)
             {
-                accountsDto.Add(new AccountReturnDto(account));
+                accountsDto.Add(new AccountDto(account));
             }
 
             return accountsDto;
         }
 
-        public async Task<AccountReturnDto> GetAccount(Guid id)
+        public async Task<AccountDto> GetAccount(Guid id)
         {
             var accounts = await _db.Accounts.ToListAsync();
 
@@ -50,15 +50,15 @@ namespace NewProject.AuthenticationServer.Repositories
 
             if (account == null) return null;
 
-            return new AccountReturnDto(account);
+            return new AccountDto(account);
         }
 
-        public async Task<AccountReturnDto> CreateAccount(AccountCreateDto accountCreateDto, Role role)
+        private async Task<AccountDto> CreateAccount(AccountCreateDto accountCreateDto, Role role)
         {
             var salt = GenerateSalt();
             var enteredPassHash = accountCreateDto.Password.ToPasswordHash(salt);
 
-            LoginModel newLoginModel = new LoginModel()
+            Login newLoginModel = new Login()
             {
                 Email = accountCreateDto.Email,
                 Salt = Convert.ToBase64String(salt),
@@ -67,7 +67,7 @@ namespace NewProject.AuthenticationServer.Repositories
 
             Account account = new Account()
             {
-                loginModel = newLoginModel,
+                Login = newLoginModel,
                 NickName = accountCreateDto.NickName,
                 Role = role
             };
@@ -76,11 +76,11 @@ namespace NewProject.AuthenticationServer.Repositories
             await _db.SaveChangesAsync();
             await _db.DisposeAsync();
 
-            return new AccountReturnDto(account);
+            return new AccountDto(account);
 
         }
 
-        public async Task<AccountReturnDto> RegisterListenerAccount(AccountCreateDto accountCreateDto)
+        public async Task<AccountDto> RegisterListenerAccount(AccountCreateDto accountCreateDto)
         {
             Role accountRole = await _db.Roles.FirstOrDefaultAsync(r => r.Name == "listener");
             var listenerAccontDto = await CreateAccount(accountCreateDto, accountRole);
@@ -88,7 +88,7 @@ namespace NewProject.AuthenticationServer.Repositories
             return listenerAccontDto;
         }
 
-        public async Task<AccountReturnDto> RegisterPerformerAccount(AccountCreateDto accountCreateDto)
+        public async Task<AccountDto> RegisterPerformerAccount(AccountCreateDto accountCreateDto)
         {
             Role accountRole = await _db.Roles.FirstOrDefaultAsync(r => r.Name == "performer");
             var performerAccountDto = await CreateAccount(accountCreateDto, accountRole);
@@ -107,9 +107,9 @@ namespace NewProject.AuthenticationServer.Repositories
             var enteredPassHash = accountCreateDto.Password.ToPasswordHash(salt);
 
             account.NickName = accountCreateDto.NickName;
-            account.loginModel.Email = accountCreateDto.Email;
-            account.loginModel.Salt = Convert.ToBase64String(salt);
-            account.loginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
+            account.LoginModel.Email = accountCreateDto.Email;
+            account.LoginModel.Salt = Convert.ToBase64String(salt);
+            account.LoginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
 
             _db.Accounts.Update(account);
             await _db.SaveChangesAsync();
@@ -133,15 +133,15 @@ namespace NewProject.AuthenticationServer.Repositories
             return true;
         }
 
-        public async Task<List<AccountReturnDto>> GetAllDeletedAccounts()
+        public async Task<List<AccountDto>> GetAllDeletedAccounts()
         {
             var deletedAccounts = await _db.Accounts.Where(c => c.IsDeleted == true).ToListAsync();
 
-            List<AccountReturnDto> accountsDto = new List<AccountReturnDto>();
+            List<AccountDto> accountsDto = new List<AccountDto>();
 
             foreach (var account in deletedAccounts)
             {
-                accountsDto.Add(new AccountReturnDto(account));
+                accountsDto.Add(new AccountDto(account));
             }
 
             return accountsDto;
@@ -170,17 +170,17 @@ namespace NewProject.AuthenticationServer.Repositories
             return randomNumber;
         }
 
-        public async Task<AccountReturnDto> Authenticate(string email, string password)
+        public async Task<AccountDto> Authenticate(string email, string password)
         {
-            var account = await _db.Accounts.FirstOrDefaultAsync(c => c.loginModel.Email == email);
+            var account = await _db.Accounts.FirstOrDefaultAsync(c => c.LoginModel.Email == email);
 
             if (account == null) return null;
 
-            var enteredPassHash = password.ToPasswordHash(Convert.FromBase64String(account.loginModel.Salt));
+            var enteredPassHash = password.ToPasswordHash(Convert.FromBase64String(account.LoginModel.Salt));
 
-            var isValid = Convert.ToBase64String(enteredPassHash) == account.loginModel.PasswordHash;
+            var isValid = Convert.ToBase64String(enteredPassHash) == account.LoginModel.PasswordHash;
 
-            return isValid ? new AccountReturnDto(account) : null;
+            return isValid ? new AccountDto(account) : null;
 
         }
     }

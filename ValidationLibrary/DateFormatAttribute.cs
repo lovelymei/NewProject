@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AspNetCoreValidationLibrary 
+{ 
     public class DateFormatAttribute : Attribute, IModelValidator
     {
         public IEnumerable<ModelValidationResult> Validate(ModelValidationContext context)

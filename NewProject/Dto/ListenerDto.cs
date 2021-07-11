@@ -1,13 +1,16 @@
-﻿using NewProject.Validation;
+﻿using AspNetCoreValidationLibrary;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 #nullable disable
 
 namespace NewProject.Models
 {
-    [UserValidation]
+    [DateFormat]
+    [OnlyLatin]
+    [Length]
     public partial class ListenerDto
     {
         public ListenerDto(Listener user)
@@ -20,9 +23,11 @@ namespace NewProject.Models
                 .ToList();
         }
 
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Surname { get; set; }
-        public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public virtual List<PerformerDto> Performers { get; set; }
     }

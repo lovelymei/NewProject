@@ -1,12 +1,15 @@
-﻿using NewProject.Validation;
+﻿using AspNetCoreValidationLibrary;
+using NewProject.Models;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
 namespace NewProject.Models
-{
-    [SongValidation]
+{ 
+    [DateFormat]
+    [OnlyLatin]
+    [Length]
     public partial class SongDto
     {
         public SongDto(Song song)
@@ -15,6 +18,7 @@ namespace NewProject.Models
             DurationMs = song.DurationMs;
             ProductionDate = song.ProductionDate;
         }
+        [Required]
         public string Title { get; set; }
         public long DurationMs { get; set; }
         public DateTime ProductionDate { get; set; }

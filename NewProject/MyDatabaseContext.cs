@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using NewProject.Models;
 
 #nullable disable
@@ -21,10 +20,6 @@ namespace NewProject
             //Database.EnsureCreated();
         }
 
-        //TODO: add Account entity +
-        //TODO: add primary key to Account +
-        //TODO: add Salt, hashing, refresh token 
-        //TODO: method CreateAccount 
         public virtual DbSet<Performer> Performers { get; set; }
         public virtual DbSet<Song> Songs { get; set; }
         public virtual DbSet<Listener> Listeners { get; set; }
@@ -56,6 +51,8 @@ namespace NewProject
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                
 
                 entity.HasIndex(p => p.NickName).IsUnique(true);
             });

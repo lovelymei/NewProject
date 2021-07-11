@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.IO;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using Microsoft.EntityFrameworkCore;
@@ -72,7 +69,7 @@ namespace NewProject.AuthenticationServer.Repositories
                 Role = role
             };
 
-            await _db.Accounts.AddAsync(account);
+           // await _db.Accounts.AddAsync(account);
             await _db.SaveChangesAsync();
             await _db.DisposeAsync();
 

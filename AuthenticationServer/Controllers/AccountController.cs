@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewProject.AuthenticationServer.Models.Dtos;
 using NewProject.AuthenticationServer.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Controllers
@@ -28,6 +24,8 @@ namespace NewProject.AuthenticationServer.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AccountDto>> GetAllAccounts()
         {
             var accounts = await _accounts.GetAllAccounts();
@@ -41,6 +39,8 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("current")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AccountDto>> GetCurrentAccount(Guid id)
         {
             var account = await _accounts.GetAccount(id);
@@ -54,6 +54,8 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteAccount(Guid id)
         {
             var isDeleted = await _accounts.DeleteAccount(id);
@@ -61,22 +63,33 @@ namespace NewProject.AuthenticationServer.Controllers
         }
 
         /// <summary>
-        /// Создать новый аккаунт
+        /// Создать новый аккаунт для слушателя
         /// </summary>
         /// <param name="accountCreateDto"></param>
         /// <param name="role"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<ActionResult<AccountDto>> CreateAccount([FromBody] AccountCreateDto accountCreateDto, Role role //Роли не должно быть она автоматически присваивается)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AccountDto>> RegisterListenerAccount([FromBody] AccountCreateDto listenerCreateDto)
         {
-            var createdAccount = await _accounts.CreateAccount(accountCreateDto, role);  //ОШИБКА нужно вызвать RegisterListenerAccount
-            // и потом метод еще один создать но уже с RegisterPerformeAccount
-
-            return Ok(createdAccount);
+            var createdListener = await _accounts.RegisterListenerAccount(listenerCreateDto);
+            return createdListener;
         }
 
-        
-        
+        /// <summary>
+        /// Создать новый аккаунт для исполнителя
+        /// </summary>
+        /// <param name="performerCreateDto"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AccountDto>> RegisterPerformerAccount([FromBody] AccountCreateDto performerCreateDto)
+        {
+            var createdPerformer = await _accounts.RegisterPerformerAccount(performerCreateDto);
+            return createdPerformer;
+        }
 
     }
 }

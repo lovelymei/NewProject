@@ -41,7 +41,7 @@ namespace NewProject.Controllers
         }
 
         /// <summary>
-        /// ПОлучить песню
+        /// Получить песню
         /// </summary>
         /// <param name="id">Идентификатор</param>
         /// <returns></returns>

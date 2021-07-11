@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NewProject.AuthenticationServer.Models.Dtos;
 using NewProject.AuthenticationServer.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Controllers
@@ -10,6 +11,7 @@ namespace NewProject.AuthenticationServer.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public class AccountController : Controller
     {
         private readonly IAccounts _accounts;
@@ -24,7 +26,7 @@ namespace NewProject.AuthenticationServer.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AccountDto>> GetAllAccounts()
         {
@@ -34,12 +36,31 @@ namespace NewProject.AuthenticationServer.Controllers
         }
 
         /// <summary>
+        /// Получить все удаленные аккаунты
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("allDeleted")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<AccountDto>>> GetAllDeletedAccounts()
+        {
+            var deletedAccounts = await _accounts.GetAllDeletedAccounts();
+            List<AccountDto> accountsDto = new List<AccountDto>();
+
+            foreach (var account in deletedAccounts)
+            {
+                accountsDto.Add(account);
+            }
+
+            return Ok(accountsDto);
+        }
+
+
+        /// <summary>
         /// Получить текущий аккаунт
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Идентификатор</param>
         /// <returns></returns>
         [HttpGet("current")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AccountDto>> GetCurrentAccount(Guid id)
         {
@@ -48,13 +69,14 @@ namespace NewProject.AuthenticationServer.Controllers
             return account;
         }
 
+
+
         /// <summary>
         /// Удалить аккаунт
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Идентификатор</param>
         /// <returns></returns>
         [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteAccount(Guid id)
         {
@@ -65,11 +87,9 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <summary>
         /// Создать новый аккаунт для слушателя
         /// </summary>
-        /// <param name="accountCreateDto"></param>
-        /// <param name="role"></param>
+        /// <param name="accountCreateDto"> Данные слушателя </param>
         /// <returns></returns>
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpPost("listener")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AccountDto>> RegisterListenerAccount([FromBody] AccountCreateDto listenerCreateDto)
         {
@@ -80,10 +100,9 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <summary>
         /// Создать новый аккаунт для исполнителя
         /// </summary>
-        /// <param name="performerCreateDto"></param>
+        /// <param name="performerCreateDto"> Данные исполнителя </param>
         /// <returns></returns>
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpPost("performer")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AccountDto>> RegisterPerformerAccount([FromBody] AccountCreateDto performerCreateDto)
         {
@@ -91,5 +110,33 @@ namespace NewProject.AuthenticationServer.Controllers
             return createdPerformer;
         }
 
+        /// <summary>
+        /// Обновить аккаунт
+        /// </summary>
+        /// <param name="id"> Идентификатор</param>
+        /// <param name="accounCreateDto"> Данные для обновления </param>
+        /// <returns></returns>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<bool>> UpdateAccount(Guid id, [FromBody] AccountCreateDto accounCreateDto)
+        {
+            var isUpdated = await _accounts.UpdateAccount(id, accounCreateDto);
+
+            return isUpdated?Ok() : NotFound();
+        }
+
+        /// <summary>
+        /// Восстановить аккаунт
+        /// </summary>
+        /// <param name="id"> Идентификатор </param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<bool>> RestoreAccount(Guid id)
+        {
+            var isRestored = await _accounts.RestoreAccount(id);
+            
+            return Ok(isRestored);
+        }
     }
 }

@@ -7,24 +7,25 @@ using System.Threading.Tasks;
 
 namespace NewProject.Services
 {
-    public class UsersInSQLRepository : IUsers
+    public class ListenersInSQLRepository : IUsers
     {
         MyDatabaseContext _db;
 
-        public UsersInSQLRepository(MyDatabaseContext db)
+        public ListenersInSQLRepository(MyDatabaseContext db)
         {
             _db = db;
         }
 
-        public async Task<List<Listener>> GetAllUsers()
+        public async Task<List<Listener>> GetAllListeners()
         {
             await Task.CompletedTask;
             return _db.Listeners.Where(c => c.IsDeleted == false).ToList();
         }
 
-        public async Task<Listener> GetUser(Guid id)
+        public async Task<Listener> GetListener(Guid id)
         {
-            var users = await _db.Listeners.Include(c => c.Performers).ToListAsync();
+            var users = await _db.Listeners.ToListAsync();
+            //var users = await _db.Listeners.Include(c => c.Performers).ToListAsync();
 
             var user = users.FirstOrDefault(c => c.ListenerId == id && c.IsDeleted == false);
 
@@ -33,7 +34,7 @@ namespace NewProject.Services
             return user;
         }
 
-        public async Task<Listener> AddUser(string name, string surname)
+        public async Task<Listener> AddListener(string name, string surname)
         {
             var random = new Random();
             var user = new Listener()
@@ -50,7 +51,7 @@ namespace NewProject.Services
             return user;
         }
 
-        public async Task<bool> UpdateUser(Guid id, string name, string surname)
+        public async Task<bool> UpdateListener(Guid id, string name, string surname)
         {
             var tempUser = new Listener() { Name = name, Surname = surname };
             
@@ -72,7 +73,7 @@ namespace NewProject.Services
             return true;
 
         }
-        public async Task<bool> DeleteUser(Guid id)
+        public async Task<bool> DeleteListener(Guid id)
         {
             var user = await _db.Listeners.FirstOrDefaultAsync(c => c.ListenerId == id);
 
@@ -86,7 +87,7 @@ namespace NewProject.Services
             return true;
         }
 
-        public async Task<List<Song>> GetAllUserSongs(Guid id)
+        public async Task<List<Song>> GetAllListenerSongs(Guid id)
         {
             var user = await _db.Listeners.Include(c=>c.Songs).FirstOrDefaultAsync(c => c.ListenerId == id && c.IsDeleted == false);
 

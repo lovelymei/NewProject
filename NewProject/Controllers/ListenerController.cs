@@ -28,7 +28,7 @@ namespace NewProject.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<ListenerDto>>> GetAllUsers()
         {
-            var users = await _users.GetAllUsers();
+            var users = await _users.GetAllListeners();
             List<ListenerDto> usersDto = new List<ListenerDto>();
 
             foreach (var user in users)
@@ -49,7 +49,7 @@ namespace NewProject.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ListenerDto>> GetUser(Guid id)
         {
-            var user = await _users.GetUser(id);
+            var user = await _users.GetListener(id);
 
             if (user == null) return NotFound();
 
@@ -66,7 +66,7 @@ namespace NewProject.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ListenerDto>> AddUser(string name, string surname)
         { 
-            var user = await _users.AddUser(name, surname);
+            var user = await _users.AddListener(name, surname);
             return Ok(user); 
         }
 
@@ -79,7 +79,7 @@ namespace NewProject.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<SongDto>>> GetAllUsersSongs(Guid id)
         {
-            var songs = await _users.GetAllUserSongs(id);
+            var songs = await _users.GetAllListenerSongs(id);
             List<SongDto> songsDto = new List<SongDto>();
             foreach (var song in songs)
             {
@@ -99,7 +99,7 @@ namespace NewProject.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteSong(Guid id)
         {
-            var isDeleted = await _users.DeleteUser(id);
+            var isDeleted = await _users.DeleteListener(id);
             return isDeleted ? Ok() : NotFound();
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APIServer.Models;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -12,6 +13,21 @@ namespace NewProject.Models
         /// Идентификатор песни
         /// </summary>
         public Guid SongId { get; set; }
+
+        /// <summary>
+        /// Идентификатор аккаунта
+        /// </summary>
+        public Guid AccountId { get; set; }
+
+        /// <summary>
+        /// Возможный идентификатор Альбома 
+        /// </summary>
+        public Guid? AlbumId { get; set; }
+
+        /// <summary>
+        /// Альбом
+        /// </summary>
+        public Album Album { get; set; }
 
         /// <summary>
         /// Название
@@ -39,9 +55,9 @@ namespace NewProject.Models
         public Guid PerformerId { get; set; }
 
         /// <summary>
-        /// Идентификатор слушателя
+        /// Слушатели
         /// </summary>
-        public Guid? ListenerId { get; set; }
+        public List<Listener> Listeners { get; set; }
 
         /// <summary>
         /// Исполнитель
@@ -55,6 +71,7 @@ namespace NewProject.Models
 
         public Song()
         {
+            Listeners = new List<Listener>();
             IsDeleted = false;
         }
 

@@ -1,15 +1,18 @@
-﻿using System;
+﻿using APIServer.Models;
+using EntitiesLibrary;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
 
 namespace NewProject.Models
 {
-    public partial class Listener
+    public partial class Listener : AccountBase
     {
         public Listener()
         {
-            Performers = new List<Performer>();
+            //Performers = new List<Performer>();
+            Albums = new List<Album>();
             Songs = new List<Song>();
             IsDeleted = false;
         }
@@ -35,11 +38,6 @@ namespace NewProject.Models
         public DateTime BirthDate { get; set; }
 
         /// <summary>
-        /// Не удален ли слушатель
-        /// </summary>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
         /// Добавленные песни
         /// </summary>
         public virtual List<Song> Songs { get; set; }
@@ -47,6 +45,11 @@ namespace NewProject.Models
         /// <summary>
         /// Добавленные исполнители
         /// </summary>
-        public virtual List<Performer> Performers { get; set; }
+        //public virtual List<Performer> Performers { get; set; }
+
+        /// <summary>
+        /// Добавленные альбомы
+        /// </summary>
+        public List<Album> Albums { get; set; }
     }
 }

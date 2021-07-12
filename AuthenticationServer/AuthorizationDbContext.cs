@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NewProject.AuthenticationServer.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,13 @@ namespace NewProject.AuthenticationServer
 
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<LoginModel> LoginModel { get; set; }
+        public virtual DbSet<Login> Login { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         internal object GetCollection<T>()
         {
             throw new NotImplementedException();
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -43,7 +46,7 @@ namespace NewProject.AuthenticationServer
                     .HasForeignKey(e => e.RoleId)
                     .HasConstraintName("Role/Accounts");
 
-                entity.HasOne(c => c.LoginModel)
+                entity.HasOne(c => c.Login)
                     .WithOne(c => c.Account);
 
                 entity.Property(p => p.NickName)
@@ -54,7 +57,7 @@ namespace NewProject.AuthenticationServer
                     .IsRequired();
             });
 
-            modelBuilder.Entity<LoginModel>(entity =>
+            modelBuilder.Entity<Login>(entity =>
             {
                 entity.Property(p => p.Email)
                     .HasMaxLength(100)

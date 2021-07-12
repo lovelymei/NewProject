@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,17 +11,20 @@ namespace NewProject.AuthenticationServer.Certificates
 {
     public class SigningAudienceCertificate : IDisposable
     {
+        private readonly IConfiguration _config;
         private readonly RSA _rsa;
 
-        public SigningAudienceCertificate()
+        public SigningAudienceCertificate(IConfiguration config)
         {
+            _config = config;
             _rsa = RSA.Create();
         }
 
-        public SigningCredentials GetAudienceSigningKey()
+        public async Task<SigningCredentials> GetAudienceSigningKey()
         {
-            string privateXmlKey = File.ReadAllText("./private_key.xml");
-            _rsa.FromXmlString(privateXmlKey);
+            var path = AppDomain.CurrentDomain.BaseDirectory;
+            var privateKeyXml = await File.ReadAllTextAsync(Path.Combine(path, _config["Jwt:rsaPrivateKeyXml"]));
+            _rsa.FromXmlString(privateKeyXml);
 
             return new SigningCredentials(
                 key: new RsaSecurityKey(_rsa),

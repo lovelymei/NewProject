@@ -14,7 +14,6 @@ namespace NewProject.AuthenticationServer.Repositories
 {
     public abstract class AccountsInSQlRepository : IAccounts
     {
-        private const int NUMBER_OF_ROUNDS = 1000;
         private readonly AuthorizationDbContext _db;
         private readonly ILogger<AccountsInSQlRepository> _logger;
 
@@ -39,7 +38,7 @@ namespace NewProject.AuthenticationServer.Repositories
             return accountsDto;
         }
 
-        
+
         public async Task<AccountDto> GetAccount(Guid id)
         {
             var accounts = await _db.Accounts.ToListAsync();
@@ -70,7 +69,7 @@ namespace NewProject.AuthenticationServer.Repositories
                 Role = role
             };
 
-           // await _db.Accounts.AddAsync(account);
+            await _db.Accounts.AddAsync(account);
             await _db.SaveChangesAsync();
             await _db.DisposeAsync();
 
@@ -105,9 +104,9 @@ namespace NewProject.AuthenticationServer.Repositories
             var enteredPassHash = accountCreateDto.Password.ToPasswordHash(salt);
 
             account.NickName = accountCreateDto.NickName;
-            account.LoginModel.Email = accountCreateDto.Email;
-            account.LoginModel.Salt = Convert.ToBase64String(salt);
-            account.LoginModel.PasswordHash = Convert.ToBase64String(enteredPassHash);
+            account.Login.Email = accountCreateDto.Email;
+            account.Login.Salt = Convert.ToBase64String(salt);
+            account.Login.PasswordHash = Convert.ToBase64String(enteredPassHash);
 
             _db.Accounts.Update(account);
             await _db.SaveChangesAsync();
@@ -168,18 +167,19 @@ namespace NewProject.AuthenticationServer.Repositories
             return randomNumber;
         }
 
-        public async Task<AccountDto> Authenticate(string email, string password)
+        public async Task<Account> Authenticate(string email, string password)
         {
-            var account = await _db.Accounts.FirstOrDefaultAsync(c => c.LoginModel.Email == email);
+            var account = await _db.Accounts.FirstOrDefaultAsync(c => c.Login.Email == email);
 
             if (account == null) return null;
 
-            var enteredPassHash = password.ToPasswordHash(Convert.FromBase64String(account.LoginModel.Salt));
+            var enteredPassHash = password.ToPasswordHash(Convert.FromBase64String(account.Login.Salt));
 
-            var isValid = Convert.ToBase64String(enteredPassHash) == account.LoginModel.PasswordHash;
+            var isValid = Convert.ToBase64String(enteredPassHash) == account.Login.PasswordHash;
 
-            return isValid ? new AccountDto(account) : null;
+            return isValid ? account : null;
 
         }
+
     }
 }

@@ -29,7 +29,7 @@ namespace NewProject
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddScoped<IUsers, UsersInSQLRepository>();
+            services.AddScoped<IUsers, ListenersInSQLRepository>();
             services.AddScoped<ISongs, SongsInSQLRepository>();
             services.AddScoped<IPerformers, PerformersInSQLRepository>();
             //services.AddScoped<IAccounts, AccountsInSQLRepository>();

@@ -25,7 +25,6 @@ namespace NewProject.Services
         public async Task<Listener> GetListener(Guid id)
         {
             var users = await _db.Listeners.ToListAsync();
-            //var users = await _db.Listeners.Include(c => c.Performers).ToListAsync();
 
             var user = users.FirstOrDefault(c => c.ListenerId == id && c.IsDeleted == false);
 

@@ -50,11 +50,14 @@ namespace NewProject
             {
                 entity.ToTable("Performer");
 
+                //TODO: add birthdate
             });
 
             modelBuilder.Entity<Listener>(entity =>
             {
                 entity.ToTable("Listener");
+
+                //TODO: add birthdate
             });
 
             modelBuilder.Entity<Song>(entity =>

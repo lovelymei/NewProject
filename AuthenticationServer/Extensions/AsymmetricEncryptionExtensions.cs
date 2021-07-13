@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using NewProject.AuthenticationServer.Certificates;
@@ -11,10 +12,10 @@ namespace NewProject.AuthenticationServer.Extensions
 {
     public static class AsymmetricEncryptionExtensions
     {
-        public static IServiceCollection AddAsymmetricAuthentication(this IServiceCollection services)
+        public static async Task<IServiceCollection> AddAsymmetricAuthentication(this IServiceCollection services, IConfiguration config)
         {
-            var issuerSigningCertificate = new SigningIssuerCertificate();
-            RsaSecurityKey issuerSingningKey = issuerSigningCertificate.GetIssuerSigningKey();
+            var issuerSigningCertificate = new SigningIssuerCertificate(config);
+            RsaSecurityKey issuerSingningKey = await issuerSigningCertificate.GetIssuerSigningKey();
 
             services.AddAuthentication(authOptions =>
             {
@@ -23,20 +24,23 @@ namespace NewProject.AuthenticationServer.Extensions
             }).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    ValidateIssuerSigningKey = false,
-                    IssuerSigningKey = issuerSingningKey,
-                    LifetimeValidator = LifetimeValidator
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = config["Jwt:Issuer"],
+                    ValidAudience = config["Jwt:Issuer"],
+                    IssuerSigningKey = issuerSingningKey
                 };
             });
             return services;
         }
 
         private static bool LifetimeValidator(DateTime? notBefore,
-            DateTime? expires, 
+            DateTime? expires,
             SecurityToken securityToken,
             TokenValidationParameters tokenValidationParameters)
         {

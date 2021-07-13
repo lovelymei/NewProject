@@ -12,7 +12,7 @@ using NewProject.AuthenticationServer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer
 {
@@ -26,20 +26,21 @@ namespace NewProject.AuthenticationServer
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public async Task ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("AuthorizationDatabase");
             services.AddDbContext<AuthorizationDbContext>(options =>
                 options.UseSqlServer(connection));
 
             services.AddScoped<IAccounts, AccountsInSQlRepository>();
-            services.AddScoped<IToken, TokenRepository>();
-           
+            services.AddScoped<IRefreshTokens, RefreshTokensInSqlRepository>();
+
+            services.AddAuthorization(); 
             //services.AddTransient<TokenService>();
 
             services.AddControllers();
 
-            services.AddAsymmetricAuthentication();
+            await services.AddAsymmetricAuthentication(Configuration);
 
         }
 

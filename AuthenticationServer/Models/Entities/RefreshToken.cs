@@ -7,7 +7,7 @@ namespace NewProject.AuthenticationServer.Models.Entities
 {
     public class RefreshToken
     {
-        public Guid Id { get; set; }
+        public Guid RefreshTokenId { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime ExpiresDate { get; set; }
         public Guid AccountId { get; set; }

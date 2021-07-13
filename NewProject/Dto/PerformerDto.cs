@@ -15,15 +15,11 @@ namespace NewProject.Models
     {
         public PerformerDto(Performer performer)
         {
-            NickName = performer.NickName;
             BirthDate = performer.BirthDate;
             Songs = performer.Songs
                 .Select(c => new SongDto(c))
                 .ToList();
         }
-
-        [Required]
-        public string NickName { get; set; }
 
         [Required]
         public DateTime BirthDate { get; set; }

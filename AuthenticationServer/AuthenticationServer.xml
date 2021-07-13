@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AuthenticationServer</name>
+    </assembly>
+    <members>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.GetAllAccounts">
+            <summary>
+            Получить все аккаунты
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.GetAllDeletedAccounts">
+            <summary>
+            Получить все удаленные аккаунты
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.GetCurrentAccount(System.Guid)">
+            <summary>
+            Получить текущий аккаунт
+            </summary>
+            <param name="id">Идентификатор</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.DeleteAccount(System.Guid)">
+            <summary>
+            Удалить аккаунт
+            </summary>
+            <param name="id">Идентификатор</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.RegisterListenerAccount(NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto)">
+            <summary>
+            Создать новый аккаунт для слушателя
+            </summary>
+            <param name="accountCreateDto"> Данные слушателя </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.RegisterPerformerAccount(NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto)">
+            <summary>
+            Создать новый аккаунт для исполнителя
+            </summary>
+            <param name="performerCreateDto"> Данные исполнителя </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.UpdateAccount(System.Guid,NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto)">
+            <summary>
+            Обновить аккаунт
+            </summary>
+            <param name="id"> Идентификатор</param>
+            <param name="accounCreateDto"> Данные для обновления </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.RestoreAccount(System.Guid)">
+            <summary>
+            Восстановить аккаунт
+            </summary>
+            <param name="id"> Идентификатор </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AuthorizationController.CreateToken(NewProject.AuthenticationServer.Models.Dtos.SignIn)">
+            <summary>
+            Создание JWT
+            </summary>
+            <response code="401">Не верные логин/пароль</response>
+            <response code="500">Внутренняя ошибка сервера</response>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AuthorizationController.RefreshToken(System.Guid)">
+            <summary>
+            Обновление JWT
+            </summary>
+            <response code="401">Токен просрочен. Вход по логину и паролю (/api/Token/signin)</response>
+            <response code="403">Аккаунт деактивирован</response>
+            <response code="500">Внутренняя ошибка сервера</response>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AuthorizationController.GetAll">
+            <summary>
+            Получить список всех RefreshToken 
+            </summary>
+            <returns></returns>
+            <response code = "204" > Список RefreshToken пуст</response>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AuthorizationController.GetAll(System.Guid)">
+            <summary>
+            Получить список всех RefreshToken для аккаунта
+            </summary>
+            <returns></returns>
+            <response code="204">Список RefreshToken пуст</response>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AuthorizationController.DeleteToken(System.Guid)">
+            <summary>
+            Удалить RefreshToken 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.AuthorizationController.DeleteTokensForAccount(System.Guid)">
+            <summary>
+            Удалить RefreshToken для аккаунта
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto.NickName">
+            <summary>
+            псевдоним
+            </summary>
+        </member>
+        <member name="P:NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto.Email">
+            <summary>
+            почта
+            </summary>
+        </member>
+        <member name="P:NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto.Password">
+            <summary>
+            пароль
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -42,14 +42,19 @@ namespace NewProject.AuthenticationServer.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<TokenDto>> CreateToken([FromBody] SignIn signIn)
         {
+            //аутентфикация (сравнение паролей и логинов)
             var account = await _accounts.Authenticate(signIn.Email, signIn.Password);
 
+            //если не ок, то не ок
             if (account == null) return Unauthorized();
 
+            //время жизни токена
             var expiresSec = int.Parse(_config["Jwt:ExpiresSec"]);
 
+            //создание refresh токена
             var refresh = await _refreshTokens.CreateRefreshToken(account, 864000); //TODO В конфиг
              
+            //access token
             var token = await BuildToken(account, refresh.RefreshTokenId, expiresSec);
 
             return Ok(token);
@@ -75,7 +80,10 @@ namespace NewProject.AuthenticationServer.Controllers
             //    _log.Warn($"Client ip address does not match the address in the JWT. jwt ip=[{tokenIp}] current=[{currentIp}]");
             //}
 
+            //взяли текущее время
             var expiresSec = int.Parse(_config["Jwt:ExpiresSec"]);
+
+            //создание refresh токена 
             var newRefreshToken = await _refreshTokens.ReCreateRefreshToken(id, 864000); //TODO В конфиг
             if (newRefreshToken == null) return Unauthorized();
 
@@ -148,8 +156,10 @@ namespace NewProject.AuthenticationServer.Controllers
 
         private async Task<TokenDto> BuildToken(Account account, Guid refreshId, int expiresSec)
         {
+            //текущее время в секунды
             var expiresDt = GetCurentDtFunc.Invoke().AddSeconds(expiresSec);
 
+            //утверждения
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, account.NickName),
@@ -172,12 +182,16 @@ namespace NewProject.AuthenticationServer.Controllers
             var creds = await signingAudienceCertificate.GetAudienceSigningKey();
 
             var token = new JwtSecurityToken(
+                //дважды потому что получатель и отправитель один и тот же (уточнить)
+                //Issuer - возможно, заголовок
                 _config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
+                //полезная информация
                 claims,
                 expires: expiresDt,
                 signingCredentials: creds);
 
+            //TODO: Token не строкой, а классом - пересмотреть эту идею
             return new TokenDto()
             {
                 Expires = expiresDt,

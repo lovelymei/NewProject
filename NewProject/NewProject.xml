@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>APIServer</name>
+        <name>NewProject</name>
     </assembly>
     <members>
         <member name="M:NewProject.Controllers.ListenerController.GetAllUsers">
@@ -73,7 +73,7 @@
         </member>
         <member name="M:NewProject.Controllers.SongController.GetSong(System.Guid)">
             <summary>
-            ПОлучить песню
+            Получить песню
             </summary>
             <param name="id">Идентификатор</param>
             <returns></returns>
@@ -92,6 +92,111 @@
             </summary>
             <param name="id"> Идентификатор песни</param>
             <returns></returns>
+        </member>
+        <member name="P:NewProject.Models.Listener.ListenerId">
+            <summary>
+            Идентификатор слушателя
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Listener.Name">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Listener.Surname">
+            <summary>
+            Фамилия
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Listener.BirthDate">
+            <summary>
+            Дата рождения
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Listener.Songs">
+            <summary>
+            Добавленные песни
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Listener.Albums">
+            <summary>
+            Добавленные альбомы
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Performer.BirthDate">
+            <summary>
+            Дата рождения
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Performer.Songs">
+            <summary>
+            Песни
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Performer.Albums">
+            <summary>
+            Альбомы
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.SongId">
+            <summary>
+            Идентификатор песни
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.AccountId">
+            <summary>
+            Идентификатор аккаунта
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.AlbumId">
+            <summary>
+            Возможный идентификатор Альбома 
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.Album">
+            <summary>
+            Альбом
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.Title">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.DurationMs">
+            <summary>
+            Длительность
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.ProductionDate">
+            <summary>
+            Дата выпуска
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.IsDeleted">
+            <summary>
+            Не удалена ли песня
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.PerformerId">
+            <summary>
+            Идентификатор исполнителя
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.Listeners">
+            <summary>
+            Слушатели
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.Performer">
+            <summary>
+            Исполнитель
+            </summary>
+        </member>
+        <member name="P:NewProject.Models.Song.Listener">
+            <summary>
+            Слушатель
+            </summary>
         </member>
     </members>
 </doc>

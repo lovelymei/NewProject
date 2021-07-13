@@ -13,6 +13,7 @@ namespace NewProject.AuthenticationServer.Repositories
 {
     public class RefreshTokensInSqlRepository : IRefreshTokens
     {
+        //TODO: разобраться с этой конструкцией
         public Func<DateTime> GetDtFunc { get; set; } = () => DateTime.Now;
         private readonly AuthorizationDbContext _db;
         private readonly ILogger<RefreshTokensInSqlRepository> _logger;
@@ -26,19 +27,21 @@ namespace NewProject.AuthenticationServer.Repositories
 
         public async Task<RefreshToken> CreateRefreshToken(Account account, int expiresSec)
         {
+            //если время жизни токена истекло, то что ты здесь делаешь вообще, а?
             if (expiresSec <= 0) throw new ArgumentOutOfRangeException(nameof(expiresSec));
 
+            //взяли текущее время
             var currentDt = GetDtFunc();
 
-            var entity = new RefreshToken(account.AccountId, currentDt, expiresSec);
+            var refreshToken = new RefreshToken(account.AccountId, currentDt, expiresSec);
 
-            await _db.RefreshTokens.AddAsync(entity);
+            await _db.RefreshTokens.AddAsync(refreshToken);
             await _db.SaveChangesAsync();
             await _db.DisposeAsync();
 
             //var deleted = col.DeleteMany(c => c.AccountId == account.Id && c.ExpiresDt < currentDt); ??
 
-            return entity;
+            return refreshToken;
         }
         public async Task<RefreshToken> ReCreateRefreshToken(Guid previousRefreshId, int expiresSec)
         {

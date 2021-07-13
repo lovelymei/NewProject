@@ -11,7 +11,7 @@ namespace NewProject.Services
         Task<bool> DeletePerformer(Guid id);
         Task<List<Performer>> GetAllPerformers();
         Task<Performer> GetPerformer(Guid id);
-        Task<Performer> GetPerformerByNickName(string nickname);
+        //Task<Performer> GetPerformerByNickName(string nickname);
         Task<List<Song>> GetAllPerformerSongs(Guid id);
         Task<bool> UpdatePerformer(Guid id, string nickaname);
     }

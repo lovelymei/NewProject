@@ -3,16 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIServer", "NewProject\APIServer.csproj", "{7363D34F-1AD6-4948-97C0-C7078C291B23}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272} = {A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationServer", "AuthenticationServer\AuthenticationServer.csproj", "{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreValidationLibrary", "ValidationLibrary\AspNetCoreValidationLibrary.csproj", "{80875608-9885-4A7A-A804-C670BA5F7892}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreValidationLibrary", "ValidationLibrary\AspNetCoreValidationLibrary.csproj", "{80875608-9885-4A7A-A804-C670BA5F7892}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiesLibrary", "EntitiesLibrary\EntitiesLibrary.csproj", "{2CCD083D-2B22-4258-A8B7-07981C4452F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntitiesLibrary", "EntitiesLibrary\EntitiesLibrary.csproj", "{2CCD083D-2B22-4258-A8B7-07981C4452F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewProject", "NewProject\NewProject.csproj", "{DF2336C8-D7B1-41A8-A7F4-F253FC78759A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7363D34F-1AD6-4948-97C0-C7078C291B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7363D34F-1AD6-4948-97C0-C7078C291B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7363D34F-1AD6-4948-97C0-C7078C291B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7363D34F-1AD6-4948-97C0-C7078C291B23}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A30F6A7D-2BE4-4958-B7BB-D2F3DAB77272}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,6 +29,10 @@ Global
 		{2CCD083D-2B22-4258-A8B7-07981C4452F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CCD083D-2B22-4258-A8B7-07981C4452F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CCD083D-2B22-4258-A8B7-07981C4452F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2336C8-D7B1-41A8-A7F4-F253FC78759A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2336C8-D7B1-41A8-A7F4-F253FC78759A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2336C8-D7B1-41A8-A7F4-F253FC78759A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2336C8-D7B1-41A8-A7F4-F253FC78759A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

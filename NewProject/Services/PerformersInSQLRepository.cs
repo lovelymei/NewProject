@@ -26,27 +26,29 @@ namespace NewProject.Services
         {
             var performers = await _db.Performers.Include(c => c.Songs).ToListAsync();
 
-            var performer = performers.FirstOrDefault(c => c.PerformerId == id && c.IsDeleted == false);
+            var performer = performers.FirstOrDefault(c => c.AccountId == id && c.IsDeleted == false);
 
             if (performer == null) return null;
 
             return performer;
         }
-        public async Task<Performer> GetPerformerByNickName(string nickname)
-        {
-            var performers = await _db.Performers.Include(c => c.Songs).ToListAsync();
+        
+        //1. будет в сервисе авторизации
+        //2. будет обобщенным (и для listener и для performer)
+        //public async Task<Performer> GetPerformerByNickName(string nickname)
+        //{
+        //    var performers = await _db.Performers.Include(c => c.Songs).ToListAsync();
 
-            var performer = performers.FirstOrDefault(c => c.NickName.Contains(nickname) && c.IsDeleted == false);
+        //    var performer = performers.FirstOrDefault(c => c.NickName.Contains(nickname) && c.IsDeleted == false);
 
-            if (performer == null) return null;
+        //    if (performer == null) return null;
 
-            return performer;
-        }
+        //    return performer;
+        //}
         public async Task<Performer> AddPerformer(string nickname)
         {
             var performer = new Performer()
             {
-                NickName = nickname,
                 BirthDate = DateTime.Now
             };
 
@@ -59,7 +61,7 @@ namespace NewProject.Services
 
         public async Task<List<Song>> GetAllPerformerSongs(Guid id)
         {
-            var performer = await _db.Performers.Include(c => c.Songs).FirstOrDefaultAsync(c => c.PerformerId == id && c.IsDeleted == false);
+            var performer = await _db.Performers.Include(c => c.Songs).FirstOrDefaultAsync(c => c.AccountId == id && c.IsDeleted == false);
 
             return performer.Songs.ToList();
         }
@@ -69,11 +71,10 @@ namespace NewProject.Services
             var random = new Random();
             var tempPerformer = new Performer()
             {
-                NickName = nickname,
                 BirthDate = DateTime.MinValue.Add(TimeSpan.FromTicks((long)(random.NextDouble()*DateTime.MaxValue.Ticks)))
             };
 
-            var performer = await _db.Performers.FirstOrDefaultAsync(c => c.PerformerId == id);
+            var performer = await _db.Performers.FirstOrDefaultAsync(c => c.AccountId == id);
 
             if (performer == null)
             {
@@ -81,7 +82,6 @@ namespace NewProject.Services
             }
             else
             {
-                performer.NickName = tempPerformer.NickName;
                 performer.BirthDate = tempPerformer.BirthDate;
             }
 
@@ -93,7 +93,7 @@ namespace NewProject.Services
 
         public async Task<bool> DeletePerformer(Guid id)
         {
-            var performer = await _db.Performers.FirstOrDefaultAsync(c => c.PerformerId == id);
+            var performer = await _db.Performers.FirstOrDefaultAsync(c => c.AccountId == id);
 
             if (performer == null) return false;
 

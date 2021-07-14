@@ -4,51 +4,10 @@
         <name>NewProject</name>
     </assembly>
     <members>
-        <member name="M:NewProject.Controllers.ListenerController.GetAllUsers">
-            <summary>
-            Получить всех пользователей
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NewProject.Controllers.ListenerController.GetUser(System.Guid)">
-            <summary>
-            Получить пользователя по идентификатору
-            </summary>
-            <param name="id">Идентификатор</param>
-            <returns></returns>
-        </member>
-        <member name="M:NewProject.Controllers.ListenerController.AddUser(System.String,System.String)">
-            <summary>
-            Добавить нового пользователя
-            </summary>
-            <param name="name"></param>
-            <param name="surname"></param>
-            <returns></returns>
-        </member>
         <member name="M:NewProject.Controllers.ListenerController.GetAllUsersSongs(System.Guid)">
             <summary>
             Получить все песни пользователя
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NewProject.Controllers.ListenerController.DeleteSong(System.Guid)">
-            <summary>
-            Удалить пользователя
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NewProject.Controllers.PerformerController.GetAllPerformers">
-            <summary>
-            Получить всех исполнителей
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NewProject.Controllers.PerformerController.GetPerformer(System.Guid)">
-            <summary>
-            Получить исполнителя по идентификатоу
-            </summary>
-            <param name="id"> Идентификатор</param>
             <returns></returns>
         </member>
         <member name="M:NewProject.Controllers.PerformerController.GetAllPerformersSongs(System.Guid)">
@@ -56,13 +15,6 @@
             Получить все песни исполнителя
             </summary>
             <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NewProject.Controllers.PerformerController.AddNewPerformer(System.String)">
-            <summary>
-            Добавить нового исполнителя
-            </summary>
-            <param name="nickname"> Псевдоним исполнителя</param>
             <returns></returns>
         </member>
         <member name="M:NewProject.Controllers.SongController.GetAllSongs">

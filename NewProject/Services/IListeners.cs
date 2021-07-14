@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace NewProject.Services
 {
-    public interface IPerformers
+    public interface IListeners
     {
-        Task<List<Song>> GetAllPerformerSongs(Guid id);
+        Task<List<Song>> GetAllListenerSongs(Guid id);
     }
 }

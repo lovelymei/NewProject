@@ -13,61 +13,10 @@ namespace NewProject.Controllers
     [ApiController]
     public class ListenerController : ControllerBase
     {
-        private readonly IUsers _users;
-        public ListenerController(IUsers users)
+        private readonly IListeners _users;
+        public ListenerController(IListeners users)
         {
             _users = users;
-        }
-
-        /// <summary>
-        /// Получить всех пользователей
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<ListenerDto>>> GetAllUsers()
-        {
-            var users = await _users.GetAllListeners();
-            List<ListenerDto> usersDto = new List<ListenerDto>();
-
-            foreach (var user in users)
-            {
-                usersDto.Add(new ListenerDto(user));
-            }
-
-            return Ok(usersDto);
-        }
-
-        /// <summary>
-        /// Получить пользователя по идентификатору
-        /// </summary>
-        /// <param name="id">Идентификатор</param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ListenerDto>> GetUser(Guid id)
-        {
-            var user = await _users.GetListener(id);
-
-            if (user == null) return NotFound();
-
-            return new ListenerDto(user);
-        }
-
-        /// <summary>
-        /// Добавить нового пользователя
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ListenerDto>> AddUser(string name, string surname)
-        { 
-            var user = await _users.AddListener(name, surname);
-            return Ok(user); 
         }
 
         /// <summary>
@@ -88,20 +37,5 @@ namespace NewProject.Controllers
 
             return Ok(songsDto);
         }
-
-        /// <summary>
-        /// Удалить пользователя
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteSong(Guid id)
-        {
-            var isDeleted = await _users.DeleteListener(id);
-            return isDeleted ? Ok() : NotFound();
-        }
-
     }
 }

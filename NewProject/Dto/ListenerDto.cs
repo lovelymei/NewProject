@@ -11,7 +11,7 @@ namespace NewProject.Models
     [DateFormat]
     [OnlyLatin]
     [Length]
-    public partial class ListenerDto
+    public class ListenerDto
     {
         public ListenerDto(Listener user)
         {

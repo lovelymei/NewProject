@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,9 +35,7 @@ namespace NewProject.AuthenticationServer
 
             services.AddScoped<IAccounts, AccountsInSQlRepository>();
             services.AddScoped<IRefreshTokens, RefreshTokensInSqlRepository>();
-
-            services.AddAuthorization(); 
-            //services.AddTransient<TokenService>();
+            services.AddScoped<IServicePermissions, ServicePermissionsInSqlRepository>();
 
             services.AddControllers();
 
@@ -57,6 +56,8 @@ namespace NewProject.AuthenticationServer
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

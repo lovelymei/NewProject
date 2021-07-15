@@ -11,10 +11,10 @@ namespace NewProject.AuthenticationServer
     {
         public AuthorizationDbContext()
         {
-            
+
         }
         public AuthorizationDbContext(DbContextOptions<AuthorizationDbContext> options)
-            :base(options)
+            : base(options)
         {
             ////при изменении бд
             //Database.EnsureDeleted();
@@ -25,6 +25,8 @@ namespace NewProject.AuthenticationServer
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
+        public virtual DbSet<AccountServicePermissions> AccountServicePermissions { get; set; }
+        public virtual DbSet<AvailiableService> AvailiableService { get; set; }
         internal object GetCollection<T>()
         {
             throw new NotImplementedException();
@@ -34,7 +36,7 @@ namespace NewProject.AuthenticationServer
         {
             if (!optionsBuilder.IsConfigured)
             {
-                
+
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

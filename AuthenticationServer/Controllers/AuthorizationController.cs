@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CwAuthorizationService.Extentions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,15 +19,20 @@ using System.Threading.Tasks;
 namespace NewProject.AuthenticationServer.Controllers
 {
     [Route("identity/[controller]")]
+    [ApiController]
     public class AuthorizationController : ControllerBase
     {
+
         public Func<DateTime> GetCurentDtFunc = () => DateTime.Now;
         private readonly IConfiguration _config;
         private readonly IAccounts _accounts;
         private readonly IRefreshTokens _refreshTokens;
+        private readonly IServicePermissions _permissionsService;
 
-        public AuthorizationController(IAccounts accounts, IConfiguration config, IRefreshTokens refreshTokens)
+        public AuthorizationController(IAccounts accounts, IConfiguration config, IRefreshTokens refreshTokens,
+            IServicePermissions permissionsService)
         {
+            _permissionsService = permissionsService;
             _refreshTokens = refreshTokens;
             _accounts = accounts;
             _config = config;
@@ -42,19 +48,14 @@ namespace NewProject.AuthenticationServer.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<TokenDto>> CreateToken([FromBody] SignIn signIn)
         {
-            //аутентфикация (сравнение паролей и логинов)
             var account = await _accounts.Authenticate(signIn.Email, signIn.Password);
 
-            //если не ок, то не ок
             if (account == null) return Unauthorized();
 
-            //время жизни токена
             var expiresSec = int.Parse(_config["Jwt:ExpiresSec"]);
 
-            //создание refresh токена
             var refresh = await _refreshTokens.CreateRefreshToken(account, 864000); //TODO В конфиг
-             
-            //access token
+
             var token = await BuildToken(account, refresh.RefreshTokenId, expiresSec);
 
             return Ok(token);
@@ -80,10 +81,7 @@ namespace NewProject.AuthenticationServer.Controllers
             //    _log.Warn($"Client ip address does not match the address in the JWT. jwt ip=[{tokenIp}] current=[{currentIp}]");
             //}
 
-            //взяли текущее время
             var expiresSec = int.Parse(_config["Jwt:ExpiresSec"]);
-
-            //создание refresh токена 
             var newRefreshToken = await _refreshTokens.ReCreateRefreshToken(id, 864000); //TODO В конфиг
             if (newRefreshToken == null) return Unauthorized();
 
@@ -156,10 +154,8 @@ namespace NewProject.AuthenticationServer.Controllers
 
         private async Task<TokenDto> BuildToken(Account account, Guid refreshId, int expiresSec)
         {
-            //текущее время в секунды
             var expiresDt = GetCurentDtFunc.Invoke().AddSeconds(expiresSec);
 
-            //утверждения
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, account.NickName),
@@ -167,31 +163,28 @@ namespace NewProject.AuthenticationServer.Controllers
                 new Claim(ClaimTypes.PrimarySid, account.AccountId.ToString()),
             };
 
-            //if (account.Role < Roles.Administrator)
-            //{
-            //    var accountServicePermissions = _permissionsService.GetServicePermissions(account.Id);
-            //    if (accountServicePermissions == null)
-            //    {
-            //        _log.Error($"No service permissions for account id ({account.Id})");
-            //        accountServicePermissions = new AccountServicePermissions();
-            //    }
-            //    claims.Add(new Claim(ClaimsPrincipalExtention.SERVICE_PERMISSIONS, JsonSerializer.Serialize(accountServicePermissions.Values.ToList())));
-            //}
+           
+            if (account.Role.RoleId < Roles)
+            {
+                var accountServicePermissions = _permissionsService.GetServicePermissions(account.AccountId);
+                if (accountServicePermissions == null)
+                {
+                    //_log.Error($"No service permissions for account id ({account.Id})");
+                    accountServicePermissions = new AccountServicePermissions();
+                }
+                //claims.Add(new Claim(ClaimsPrincipalExtention.SERVICE_PERMISSIONS, JsonSerializer.Serialize(accountServicePermissions.Values.ToList())));
+            }
 
             SigningAudienceCertificate signingAudienceCertificate = new SigningAudienceCertificate(_config);
             var creds = await signingAudienceCertificate.GetAudienceSigningKey();
 
             var token = new JwtSecurityToken(
-                //дважды потому что получатель и отправитель один и тот же (уточнить)
-                //Issuer - возможно, заголовок
                 _config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
-                //полезная информация
                 claims,
                 expires: expiresDt,
                 signingCredentials: creds);
 
-            //TODO: Token не строкой, а классом - пересмотреть эту идею
             return new TokenDto()
             {
                 Expires = expiresDt,

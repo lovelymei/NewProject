@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewProject.AuthenticationServer.Models.Dtos;
 using NewProject.AuthenticationServer.Repositories;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Controllers
 {
-    [Produces("application/json")]
+    //[Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -26,9 +27,9 @@ namespace NewProject.AuthenticationServer.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        
+
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AccountDto>> GetAllAccounts()
+        public async Task<ActionResult<List<AccountDto>>> GetAllAccounts()
         {
             var accounts = await _accounts.GetAllAccounts();
             if (accounts == null) return NotFound();
@@ -44,14 +45,7 @@ namespace NewProject.AuthenticationServer.Controllers
         public async Task<ActionResult<List<AccountDto>>> GetAllDeletedAccounts()
         {
             var deletedAccounts = await _accounts.GetAllDeletedAccounts();
-            List<AccountDto> accountsDto = new List<AccountDto>();
-
-            foreach (var account in deletedAccounts)
-            {
-                accountsDto.Add(account);
-            }
-
-            return Ok(accountsDto);
+            return Ok(deletedAccounts);
         }
 
 
@@ -87,7 +81,7 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <summary>
         /// Создать новый аккаунт для слушателя
         /// </summary>
-        /// <param name="accountCreateDto"> Данные слушателя </param>
+        /// <param name="listenerCreateDto"> Данные слушателя </param>
         /// <returns></returns>
         [HttpPost("listener")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -117,12 +111,13 @@ namespace NewProject.AuthenticationServer.Controllers
         /// <param name="accounCreateDto"> Данные для обновления </param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<bool>> UpdateAccount(Guid id, [FromBody] AccountCreateDto accounCreateDto)
         {
             var isUpdated = await _accounts.UpdateAccount(id, accounCreateDto);
 
-            return isUpdated?Ok() : NotFound();
+            return isUpdated ? Ok() : NotFound();
         }
 
         /// <summary>
@@ -135,7 +130,7 @@ namespace NewProject.AuthenticationServer.Controllers
         public async Task<ActionResult<bool>> RestoreAccount(Guid id)
         {
             var isRestored = await _accounts.RestoreAccount(id);
-            
+
             return Ok(isRestored);
         }
     }

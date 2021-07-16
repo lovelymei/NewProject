@@ -1,5 +1,4 @@
-﻿using APIServer.Models;
-using EntitiesLibrary;
+﻿using EntitiesLibrary;
 using System;
 using System.Collections.Generic;
 
@@ -40,12 +39,9 @@ namespace NewProject.Models
         /// <summary>
         /// Добавленные песни
         /// </summary>
-        public virtual List<Song> Songs { get; set; }
+        public List<Song> Songs { get; set; }
 
-        /// <summary>
-        /// Добавленные исполнители
-        /// </summary>
-        //public virtual List<Performer> Performers { get; set; }
+        public virtual List<Performer> Performers { get; set; }
 
         /// <summary>
         /// Добавленные альбомы

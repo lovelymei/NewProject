@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewProject.AuthenticationServer.Models.Dtos;
+using System;
 using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Repositories

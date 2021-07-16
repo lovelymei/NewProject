@@ -1,9 +1,7 @@
-﻿using CwAuthorizationService.Extentions;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using NewProject.AuthenticationServer.Certificates;
 using NewProject.AuthenticationServer.Models.Dtos;
 using NewProject.AuthenticationServer.Models.Entities;
@@ -12,7 +10,6 @@ using NewProject.Authorization.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 

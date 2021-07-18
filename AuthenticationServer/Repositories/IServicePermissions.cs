@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NewProject.AuthenticationServer.Models.Dtos;
+using NewProject.AuthenticationServer.Models.Entities;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Repositories
@@ -9,8 +12,8 @@ namespace NewProject.AuthenticationServer.Repositories
         void CreateAvailiableService(AvailiableServiceCreateDto serviceCreateDto);
         Task<bool> DeleteAvailiableService(string serviceId);
         Task<bool> DeleteServicePermissions(Guid accountId);
-        Task<System.Collections.Generic.IEnumerable<AvailiableServiceDto>> GetAvailiableServices();
-        Task<AccountServicePermissionsDto> GetServicePermissions(Guid accountId);
-        Task<AccountServicePermissionsDto> SaveServicePermissions(AccountServicePermissionsCreateDto permissionsCreateDto);
+        Task<IEnumerable<AvailiableServiceDto>> GetAvailiableServices();
+        Task<AccountServicePermissions> GetServicePermissions(Guid accountId);
+        void SaveServicePermissions(AccountServicePermissions permissionsCreateDto);
     }
 }

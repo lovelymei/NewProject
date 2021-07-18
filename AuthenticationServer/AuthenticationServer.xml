@@ -34,7 +34,7 @@
             <summary>
             Создать новый аккаунт для слушателя
             </summary>
-            <param name="accountCreateDto"> Данные слушателя </param>
+            <param name="listenerCreateDto"> Данные слушателя </param>
             <returns></returns>
         </member>
         <member name="M:NewProject.AuthenticationServer.Controllers.AccountController.RegisterPerformerAccount(NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto)">
@@ -99,6 +99,46 @@
             Удалить RefreshToken для аккаунта
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.GetAll">
+            <summary>
+            Получить все доступные сервисы 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.Create(NewProject.AuthenticationServer.Models.Dtos.AvailiableServiceCreateDto)">
+            <summary>
+            Добавить новый доступный сервис
+            </summary>
+            <returns></returns>
+            <response code="409">Сервис с таким ключем уже есть</response>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.Delete(System.String)">
+            <summary>
+            Удалить сервис
+            </summary>
+            <param name="serviceKey"></param>
+            <returns></returns>
+            <response code="409">Сервис с таким ключем отсутствует</response>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.SetAccountServicepermission(System.Guid,System.String,System.Boolean)">
+            <summary>
+            Установить разрешения для доступа к сервисам для аккаунта
+            </summary>
+            <param name="accountId"></param>
+            <param name="serviceKey"></param>
+            <param name="isAllow"></param>
+            <returns></returns>
+            <response code="409">Сервис с таким ключем отсутствует</response>
+            <response code="410">Данные аккаунта отсутствуют</response>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.GetPermissions(System.Guid)">
+            <summary>
+            Получить разрешения для доступа к сервисам для аккаунта
+            </summary>
+            <param name="accountId"></param>
+            <returns></returns>
+            <response code="410">Данные аккаунта отсутствуют</response>
         </member>
         <member name="P:NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto.NickName">
             <summary>

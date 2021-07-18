@@ -69,25 +69,21 @@ namespace NewProject.AuthenticationServer.Repositories
             return true;
         }
 
-        public async Task<AccountServicePermissionsDto> GetServicePermissions(Guid accountId)
+        public async Task<AccountServicePermissions> GetServicePermissions(Guid accountId)
         {
             var permissions = await _db.AccountServicePermissions.FirstOrDefaultAsync(c => c.Id == accountId);
-            return new AccountServicePermissionsDto(permissions);
+            return permissions;
         }
 
-        public async Task<AccountServicePermissionsDto> SaveServicePermissions(AccountServicePermissionsCreateDto permissionsCreateDto)
+        public async void SaveServicePermissions(AccountServicePermissions permissionsCreateDto)
         {
+            await Task.CompletedTask;
             //var methodInfo = $"{nameof(SaveServicePermissions)}(id = {permissions.Id})";
             //Log.Info(methodInfo);
             //permissions.Timestamp = GetDtFunc.Invoke();
 
-            var newPermission = permissionsCreateDto.ToEntity();
-
             //var col = Db.GetCollection<AccountServicePermissions>();
             //col.Upsert(permissions);
-
-            await Task.CompletedTask;
-            return new AccountServicePermissionsDto(newPermission);
         } //TODO
 
         public async Task<bool> DeleteServicePermissions(Guid accountId)

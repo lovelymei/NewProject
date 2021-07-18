@@ -1,10 +1,10 @@
-﻿using CwAuthorizationService.Extentions;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NewProject.AuthenticationServer.Certificates;
+using NewProject.AuthenticationServer.Extensions;
 using NewProject.AuthenticationServer.Models.Dtos;
 using NewProject.AuthenticationServer.Models.Entities;
 using NewProject.AuthenticationServer.Repositories;
@@ -88,9 +88,8 @@ namespace NewProject.AuthenticationServer.Controllers
             var account = await _accounts.GetAccount(newRefreshToken.AccountId);
             if (account == null) return Forbid();
 
-            //var token = await BuildToken(account, newRefreshToken.RefreshTokenId, expiresSec);
-            //return Ok(token);
-            return Ok();
+            var token = await BuildToken(account, newRefreshToken.RefreshTokenId, expiresSec);
+            return Ok(token);
         }
 
         /// <summary>
@@ -164,16 +163,16 @@ namespace NewProject.AuthenticationServer.Controllers
             };
 
            
-            if (account.Role.RoleId < Roles)
-            {
-                var accountServicePermissions = _permissionsService.GetServicePermissions(account.AccountId);
-                if (accountServicePermissions == null)
-                {
-                    //_log.Error($"No service permissions for account id ({account.Id})");
-                    accountServicePermissions = new AccountServicePermissions();
-                }
-                //claims.Add(new Claim(ClaimsPrincipalExtention.SERVICE_PERMISSIONS, JsonSerializer.Serialize(accountServicePermissions.Values.ToList())));
-            }
+            //if (account.Role.RoleId < Roles)
+            //{
+            //    var accountServicePermissions = await _permissionsService.GetServicePermissions(account.AccountId);
+            //    if (accountServicePermissions == null)
+            //    {
+            //        //_log.Error($"No service permissions for account id ({account.Id})");
+            //        accountServicePermissions = new AccountServicePermissions();
+            //    }
+            //    claims.Add(new Claim(ClaimsPrincipalExtention.SERVICE_PERMISSIONS, JsonSerializer.Serialize(accountServicePermissions.Values.ToList())));
+            //}
 
             SigningAudienceCertificate signingAudienceCertificate = new SigningAudienceCertificate(_config);
             var creds = await signingAudienceCertificate.GetAudienceSigningKey();

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using NewProject.AuthenticationServer.Models.Dtos;
 using NewProject.AuthenticationServer.Repositories;
 
-namespace CwAuthorizationService.Controllers
+namespace NewProject.AuthenticationServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,7 +26,10 @@ namespace CwAuthorizationService.Controllers
             _accounts = accounts;
         }
 
-
+        /// <summary>
+        /// Получить все доступные сервисы 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         //[AuthorizeEnum(Roles.Administrator, Roles.SuperAdministrator)]
         public async Task<ActionResult<List<AvailiableServiceDto>>> GetAll()
@@ -43,9 +46,9 @@ namespace CwAuthorizationService.Controllers
         [HttpPost("serviceKey={serviceKey}&description={description}&uri={uri}")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         //[AuthorizeEnum(Roles.Administrator, Roles.SuperAdministrator)]
-        public async Task<ActionResult> Create(string serviceKey, [FromBody] AvailiableServiceCreateDto serviceCreateDto)
+        public async Task<ActionResult> Create([FromBody] AvailiableServiceCreateDto serviceCreateDto)
         {
-            var isServiceKeyExist = await _permissionsService.CheckExistInAvailiableServices(serviceKey);
+            var isServiceKeyExist = await _permissionsService.CheckExistInAvailiableServices(serviceCreateDto.Id);
             if (isServiceKeyExist) return Conflict();
             _permissionsService.CreateAvailiableService(serviceCreateDto);
             return Ok();
@@ -64,7 +67,7 @@ namespace CwAuthorizationService.Controllers
         {
             var isServiceKeyExist = await _permissionsService.CheckExistInAvailiableServices(serviceKey);
             if (!isServiceKeyExist) return Conflict();
-
+            await _permissionsService.DeleteAvailiableService(serviceKey);
             return Ok();
         }
 
@@ -86,20 +89,20 @@ namespace CwAuthorizationService.Controllers
             var isServiceKeyExist = await _permissionsService.CheckExistInAvailiableServices(serviceKey);
             if (!isServiceKeyExist) return Conflict();
 
-            var accountPermissions = _permissionsService.GetServicePermissions(accountId);
+            var accountPermissions = await _permissionsService.GetServicePermissions(accountId);
             if (accountPermissions == null) return StatusCode(StatusCodes.Status410Gone);
 
-            //if (accountPermissions.Values.ContainsKey(serviceKey))
-            //{
-            //    accountPermissions.Values[serviceKey] = isAllow;
-            //}
-            //else
-            //{
-            //    accountPermissions.Values.Add(serviceKey, isAllow);
-            //}
+            if (accountPermissions.Values.ContainsKey(serviceKey))
+            {
+                accountPermissions.Values[serviceKey] = isAllow;
+            }
+            else
+            {
+                accountPermissions.Values.Add(serviceKey, isAllow);
+            }
 
             //accountPermissions.SetByAccountId = HttpContext.User.GetAccountId();
-            //_permissionsService.SaveServicePermissions(accountPermissions);
+            _permissionsService.SaveServicePermissions(accountPermissions);
 
             return Ok();
         }
@@ -118,7 +121,7 @@ namespace CwAuthorizationService.Controllers
             var permissions = await _permissionsService.GetServicePermissions(accountId);
             if (permissions == null) return StatusCode(StatusCodes.Status410Gone);
 
-            return permissions;
+            return new AccountServicePermissionsDto(permissions);
         }
     }
 }

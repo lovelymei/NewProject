@@ -60,7 +60,7 @@ namespace NewProject.AuthenticationServer.Controllers
         {
             var account = await _accounts.GetAccount(id);
             if (account == null) return NotFound();
-            return account;
+            return new AccountDto(account);
         }
 
 

@@ -10,7 +10,7 @@ namespace NewProject.AuthenticationServer.Repositories
     {
         Task<Account> Authenticate(string email, string password);
         Task<bool> DeleteAccount(Guid id);
-        Task<AccountDto> GetAccount(Guid id);
+        Task<Account> GetAccount(Guid id);
         Task<IEnumerable<AccountDto>> GetAllAccounts();
         Task<List<AccountDto>> GetAllDeletedAccounts();
         Task<AccountDto> RegisterListenerAccount(AccountCreateDto accountCreateDto);

@@ -39,7 +39,7 @@ namespace NewProject.AuthenticationServer.Repositories
         }
 
 
-        public async Task<AccountDto> GetAccount(Guid id)
+        public async Task<Account> GetAccount(Guid id)
         {
             var accounts = await _db.Accounts.ToListAsync();
 
@@ -47,7 +47,7 @@ namespace NewProject.AuthenticationServer.Repositories
 
             if (account == null) return null;
 
-            return new AccountDto(account);
+            return account;
         }
 
         private async Task<AccountDto> CreateAccount(AccountCreateDto accountCreateDto, Role role)

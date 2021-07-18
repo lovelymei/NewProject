@@ -1,10 +1,7 @@
-﻿using APIServer.Models;
+﻿using NewProject.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace APIServer.Dto
+namespace NewProject.Dto
 {
     public class AlbumDto
     {

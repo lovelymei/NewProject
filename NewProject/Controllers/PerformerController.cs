@@ -40,5 +40,35 @@ namespace NewProject.Controllers
             return Ok(songsDto);
         }
 
+        /// <summary>
+        /// Прикрепить песню к исполнителю
+        /// </summary>
+        /// <param name="performerId"> Идентификатор исполнителя</param>
+        /// <param name="songId"> Идентификатор песни</param>
+        /// <returns></returns>
+        [HttpPut("{performerId}/{songId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> AttachMusicSongToPerformer(Guid performerId, Guid songId)
+        {
+            var isAttached = await _performers.AttachSong(performerId, songId);
+            return isAttached ? Ok() : NotFound();
+        }
+
+        /// <summary>
+        /// Прикрепить альбом к исполнителю
+        /// </summary>
+        /// <param name="performerId"> Идентификатор исполнителя</param>
+        /// <param name="albumId"> Идентификатор альбома</param>
+        /// <returns></returns>
+        [HttpPut("{performerId}/{albumId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> AttachAlbumToPerformer(Guid performerId, Guid albumId)
+        {
+            var isAttached = await _performers.AttachAlbum(performerId, albumId);
+            return isAttached ? Ok() : NotFound();
+        }
+
     }
 }

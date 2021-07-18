@@ -22,6 +22,36 @@ namespace NewProject.Services
 
             return user.Songs.ToList();
         }
+
+        public async Task<bool> AttachSong(Guid accountId, Guid songId)
+        {
+            var listener = await _db.Listeners.FirstOrDefaultAsync(c => c.AccountId == accountId);
+
+            var song = await _db.Songs.FirstOrDefaultAsync(c => c.SongId == songId);
+
+            if (listener == null || song == null) return false;
+
+            listener.Songs.Add(song);
+            await _db.SaveChangesAsync();
+            await _db.DisposeAsync();
+
+            return true;
+        }
+
+        public async Task<bool> AttachAlbum(Guid accountId, Guid albumId)
+        {
+            var listener = await _db.Listeners.FirstOrDefaultAsync(c => c.AccountId == accountId);
+
+            var album = await _db.Albums.FirstOrDefaultAsync(c => c.AlbumId == albumId);
+
+            if (listener == null || album == null) return false;
+
+            listener.Albums.Add(album);
+            await _db.SaveChangesAsync();
+            await _db.DisposeAsync();
+
+            return true;
+        }
     }
 
 }

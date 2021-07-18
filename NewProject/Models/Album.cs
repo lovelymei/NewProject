@@ -1,11 +1,9 @@
-﻿using NewProject.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace APIServer.Models
+namespace NewProject.Models
 {
+    //TODO: AlbumDto, AlbumController, AlbumRepository
     public class Album
     {
         public Guid AlbumId { get; set; }

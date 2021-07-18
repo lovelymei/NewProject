@@ -1,4 +1,4 @@
-﻿using APIServer.Models;
+﻿
 using EntitiesLibrary;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ namespace NewProject.Models
 {
     public partial class Performer : AccountBase
     {
-
         public Performer()
         {
           //  Listeners = new List<Listener>();
@@ -28,9 +27,6 @@ namespace NewProject.Models
         /// </summary>
         public virtual List<Song> Songs { get; set; }
 
-        /// <summary>
-        /// Слушатели
-        /// </summary>
        // public virtual List<Listener> Listeners { get; set; }
 
         /// <summary>

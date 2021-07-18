@@ -15,7 +15,7 @@ namespace NewProject
         public MyDatabaseContext(DbContextOptions<MyDatabaseContext> options)
             : base(options)
         {
-            //при изменении бд 
+            //при изменении  бд 
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
         }

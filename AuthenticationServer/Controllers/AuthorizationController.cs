@@ -11,7 +11,9 @@ using NewProject.Authorization.Models.Dtos;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace NewProject.AuthenticationServer.Controllers
@@ -20,17 +22,16 @@ namespace NewProject.AuthenticationServer.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-
-        public Func<DateTime> GetCurentDtFunc = () => DateTime.Now;
+        //QUESTION: почему реализовано именно так
+        public Func<DateTime> GetCurrentDtFunc = () => DateTime.Now;
         private readonly IConfiguration _config;
         private readonly IAccounts _accounts;
         private readonly IRefreshTokens _refreshTokens;
-        private readonly IServicePermissions _permissionsService;
 
-        public AuthorizationController(IAccounts accounts, IConfiguration config, IRefreshTokens refreshTokens,
-            IServicePermissions permissionsService)
+        public AuthorizationController(IAccounts accounts, 
+            IConfiguration config, 
+            IRefreshTokens refreshTokens)
         {
-            _permissionsService = permissionsService;
             _refreshTokens = refreshTokens;
             _accounts = accounts;
             _config = config;
@@ -151,7 +152,8 @@ namespace NewProject.AuthenticationServer.Controllers
 
         private async Task<TokenDto> BuildToken(Account account, Guid refreshId, int expiresSec)
         {
-            var expiresDt = GetCurentDtFunc.Invoke().AddSeconds(expiresSec);
+            //время создания токена
+            var expiresDt = GetCurrentDtFunc.Invoke().AddSeconds(expiresSec);
 
             var claims = new List<Claim>
             {
@@ -159,18 +161,6 @@ namespace NewProject.AuthenticationServer.Controllers
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, account.Role.ToString()),
                 new Claim(ClaimTypes.PrimarySid, account.AccountId.ToString()),
             };
-
-           
-            //if (account.Role.RoleId < Roles)
-            //{
-            //    var accountServicePermissions = await _permissionsService.GetServicePermissions(account.AccountId);
-            //    if (accountServicePermissions == null)
-            //    {
-            //        //_log.Error($"No service permissions for account id ({account.Id})");
-            //        accountServicePermissions = new AccountServicePermissions();
-            //    }
-            //    claims.Add(new Claim(ClaimsPrincipalExtention.SERVICE_PERMISSIONS, JsonSerializer.Serialize(accountServicePermissions.Values.ToList())));
-            //}
 
             SigningAudienceCertificate signingAudienceCertificate = new SigningAudienceCertificate(_config);
             var creds = await signingAudienceCertificate.GetAudienceSigningKey();

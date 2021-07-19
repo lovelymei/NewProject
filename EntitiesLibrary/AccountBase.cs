@@ -10,10 +10,5 @@ namespace EntitiesLibrary
     {
         public Guid AccountId { get; set; }
         public bool IsDeleted { get; set; }
-
-        public AccountBase()
-        {
-            IsDeleted = false;
-        }
     }
 }

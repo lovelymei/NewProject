@@ -25,8 +25,6 @@ namespace NewProject.AuthenticationServer
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
-        public virtual DbSet<AccountServicePermissions> AccountServicePermissions { get; set; }
-        public virtual DbSet<AvailiableService> AvailiableService { get; set; }
         internal object GetCollection<T>()
         {
             throw new NotImplementedException();

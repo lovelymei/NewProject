@@ -64,7 +64,6 @@ namespace NewProject.AuthenticationServer.Controllers
         }
 
 
-
         /// <summary>
         /// Удалить аккаунт
         /// </summary>

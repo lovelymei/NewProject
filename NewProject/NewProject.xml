@@ -4,10 +4,66 @@
         <name>NewProject</name>
     </assembly>
     <members>
+        <member name="M:NewProject.Controllers.AlbumController.GetAllAlbums">
+            <summary>
+            Получить все альбомы
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.AlbumController.GetAlbum(System.Guid)">
+            <summary>
+            Получить альбом по идентификатору
+            </summary>
+            <param name="id"> Идентификатор альбома</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.AlbumController.AddAlbum(System.String)">
+            <summary>
+            Добавить альбом
+            </summary>
+            <param name="title"> Название альбома </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.AlbumController.DeleteAlbum(System.Guid)">
+            <summary>
+            Удалить альбом
+            </summary>
+            <param name="id"> Идентификатор альбома </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.AlbumController.RestoreAlbum(System.Guid)">
+            <summary>
+            Восстановить альбом
+            </summary>
+            <param name="id"> Идентификатор альбома </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.AlbumController.GetAllDeletedAlbums">
+            <summary>
+            Получить все удаленные альбомы
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:NewProject.Controllers.ListenerController.GetAllUsersSongs(System.Guid)">
             <summary>
             Получить все песни пользователя
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.ListenerController.AttachSongToListener(System.Guid,System.Guid)">
+            <summary>
+            Прикрепить песню к слушателю 
+            </summary>
+            <param name="listenerId"> Идентификатор слушателя </param>
+            <param name="songId"> Идентификатор песни </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.ListenerController.AttachAlbumToListener(System.Guid,System.Guid)">
+            <summary>
+            Прикрепить альбом к слушателю
+            </summary>
+            <param name="listenerId"> Идентификатор слушателя </param>
+            <param name="albumId"> Идентификатор альбома </param>
             <returns></returns>
         </member>
         <member name="M:NewProject.Controllers.PerformerController.GetAllPerformersSongs(System.Guid)">
@@ -15,6 +71,22 @@
             Получить все песни исполнителя
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.PerformerController.AttachMusicSongToPerformer(System.Guid,System.Guid)">
+            <summary>
+            Прикрепить песню к исполнителю
+            </summary>
+            <param name="performerId"> Идентификатор исполнителя</param>
+            <param name="songId"> Идентификатор песни</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.Controllers.PerformerController.AttachAlbumToPerformer(System.Guid,System.Guid)">
+            <summary>
+            Прикрепить альбом к исполнителю
+            </summary>
+            <param name="performerId"> Идентификатор исполнителя</param>
+            <param name="albumId"> Идентификатор альбома</param>
             <returns></returns>
         </member>
         <member name="M:NewProject.Controllers.SongController.GetAllSongs">

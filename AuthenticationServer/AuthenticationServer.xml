@@ -100,46 +100,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.GetAll">
-            <summary>
-            Получить все доступные сервисы 
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.Create(NewProject.AuthenticationServer.Models.Dtos.AvailiableServiceCreateDto)">
-            <summary>
-            Добавить новый доступный сервис
-            </summary>
-            <returns></returns>
-            <response code="409">Сервис с таким ключем уже есть</response>
-        </member>
-        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.Delete(System.String)">
-            <summary>
-            Удалить сервис
-            </summary>
-            <param name="serviceKey"></param>
-            <returns></returns>
-            <response code="409">Сервис с таким ключем отсутствует</response>
-        </member>
-        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.SetAccountServicepermission(System.Guid,System.String,System.Boolean)">
-            <summary>
-            Установить разрешения для доступа к сервисам для аккаунта
-            </summary>
-            <param name="accountId"></param>
-            <param name="serviceKey"></param>
-            <param name="isAllow"></param>
-            <returns></returns>
-            <response code="409">Сервис с таким ключем отсутствует</response>
-            <response code="410">Данные аккаунта отсутствуют</response>
-        </member>
-        <member name="M:NewProject.AuthenticationServer.Controllers.ServicePermissionsController.GetPermissions(System.Guid)">
-            <summary>
-            Получить разрешения для доступа к сервисам для аккаунта
-            </summary>
-            <param name="accountId"></param>
-            <returns></returns>
-            <response code="410">Данные аккаунта отсутствуют</response>
-        </member>
         <member name="P:NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto.NickName">
             <summary>
             псевдоним
@@ -154,6 +114,69 @@
             <summary>
             пароль
             </summary>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.Authenticate(System.String,System.String)">
+            <summary>
+            Аутентификация 
+            </summary>
+            <param name="email"> e-mail</param>
+            <param name="password"> пароль </param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.DeleteAccount(System.Guid)">
+            <summary>
+            Удаление аккаунта
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.GetAccount(System.Guid)">
+            <summary>
+            Получить аккаунт
+            </summary>
+            <param name="id"> идентификатор</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.GetAllAccounts">
+            <summary>
+            Получить все аккаунты
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.GetAllDeletedAccounts">
+            <summary>
+            Получить все удаленные аккаунты
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.RegisterListenerAccount(NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto)">
+            <summary>
+            Регистрация нового слушателя
+            </summary>
+            <param name="accountCreateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.RegisterPerformerAccount(NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto)">
+            <summary>
+            Регистрация нового исполнителя
+            </summary>
+            <param name="accountCreateDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.RestoreAccount(System.Guid)">
+            <summary>
+            Восстановление аккаунта
+            </summary>
+            <param name="id"> Индентификатор</param>
+            <returns></returns>
+        </member>
+        <member name="M:NewProject.AuthenticationServer.Repositories.IAccounts.UpdateAccount(System.Guid,NewProject.AuthenticationServer.Models.Dtos.AccountCreateDto)">
+            <summary>
+            Обновление аккаунта
+            </summary>
+            <param name="id"> Идентификатор </param>
+            <param name="accountCreateDto"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

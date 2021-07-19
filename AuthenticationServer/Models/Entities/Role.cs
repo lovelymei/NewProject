@@ -17,5 +17,4 @@ namespace NewProject.AuthenticationServer.Models.Entities
         }
 
     }
-
 }

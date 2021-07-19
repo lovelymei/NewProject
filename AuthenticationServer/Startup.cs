@@ -35,10 +35,18 @@ namespace NewProject.AuthenticationServer
 
             services.AddScoped<IAccounts, AccountsInSQlRepository>();
             services.AddScoped<IRefreshTokens, RefreshTokensInSqlRepository>();
-            services.AddScoped<IServicePermissions, ServicePermissionsInSqlRepository>();
 
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthenticationnServer", Version = "v1" });
+                })
+                  .ConfigureSwaggerGen(options =>
+                    {
+                        var xmlPath = Path.Combine(AppContext.BaseDirectory, "AuthenticationServer.xml");
+                        options.IncludeXmlComments(xmlPath, true);
 
+            });
             await services.AddAsymmetricAuthentication(Configuration);
 
         }

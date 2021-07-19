@@ -38,13 +38,5 @@ namespace NewProject.AuthenticationServer.Extensions
             });
             return services;
         }
-
-        private static bool LifetimeValidator(DateTime? notBefore,
-            DateTime? expires,
-            SecurityToken securityToken,
-            TokenValidationParameters tokenValidationParameters)
-        {
-            return expires != null && expires > DateTime.UtcNow;
-        }
     }
 }

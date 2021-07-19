@@ -158,7 +158,7 @@ namespace NewProject.AuthenticationServer.Repositories
             return true;
         }
 
-        public static byte[] GenerateSalt()
+        private static byte[] GenerateSalt()
         {
             using var randomNumberGenerator = new RNGCryptoServiceProvider();
             var randomNumber = new byte[16];
